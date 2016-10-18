@@ -1,7 +1,10 @@
 #include "renderer.h"
 #include <qpainter.h>
 
-Renderer::Renderer(QWidget *parent) : QGLWidget(parent)
+Renderer::Renderer(QWidget *parent, float framePerSecond) :
+	QGLWidget(parent),
+	point(QPointF(0,0)),
+	millisecondDelay(1000.0/framePerSecond)
 {
 
 }
@@ -14,6 +17,9 @@ void Renderer::initializeGL()
 	glEnable(GL_MULTISAMPLE);
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
+	timer.setSingleShot(false);
+	QObject::connect(&timer, SIGNAL(timeout()),this,SLOT(animate()));
+	timer.start(millisecondDelay);
 }
 
 void Renderer::resizeGL(int w, int h)
@@ -26,10 +32,19 @@ void Renderer::resizeGL(int w, int h)
 	glLoadIdentity();
 }
 
-void Renderer::paintEvent(QPaintEvent * event)
+void Renderer::paintEvent(QPaintEvent *)
 {
+
 	QPainter painter;
 	painter.begin(this);
-	painter.fillRect(QRect(QPoint(1,1),QPoint(100,100)), QBrush(QColor("white")));
+	painter.setBackground(QBrush(QColor(0,0,0)));
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.fillRect(QRect(point.toPoint(),QSize(20,20)), QBrush(QColor("red")));
 	painter.end();
 }
+
+void Renderer::animate(){
+	point += QPointF(2,2);
+	update();
+}
+

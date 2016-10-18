@@ -1,5 +1,5 @@
-# TD's
-Un dépôt pour nos codes sources liés aux Projets.  
+# Projet's
+Un dépôt pour nos codes sources liés aux projets.  
 
 ## Pourquoi ?
 - Pouvoir directement partager du code, sans besoin de Mail ou Facebook;
