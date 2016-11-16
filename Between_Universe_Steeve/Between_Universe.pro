@@ -13,11 +13,19 @@ TEMPLATE = app
 
 LIBS += opengl32.lib
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    renderer.cpp
+SOURCES += *.cpp \
+    space.cpp \
+    colliderobject.cpp \
+    enemy.cpp \
+    weapon.cpp
 
-HEADERS  += mainwindow.h \
-    renderer.h
+HEADERS  += *.h \
+    space.h \
+    colliderobject.h \
+    enemy.h \
+    weapon.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    ressources.qrc
