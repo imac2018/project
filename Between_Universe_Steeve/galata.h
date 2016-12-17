@@ -22,17 +22,18 @@ private:
 		virtual void paint(QPainter& context) const;
 	};
 
-	Player* p1;
-	Space space;
+	QList<Player*> players;
+	Space _space;
 	QPointF _initialShipPosition;
 
 public:
 	Galata(Player* p1);
-	void setPlayer(Player* p1);
+	void addPlayer(Player* p);
 	virtual bool inputHandle(QInputEvent *event);
 	QPointF initialShipPosition();
 	void addShip(Ship* ship);
 	void addEnemy(Enemy* e);
+	const Space& space();
 
 public slots:
 	virtual bool update();

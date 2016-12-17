@@ -27,12 +27,18 @@ class Player
 {
 	QMap<Input, ShipAction> controls;
 	Ship* ship;
+	unsigned int _points;
+	QString _name;
 public:
-	Player();
+	Player(QString _name);
 	void setShip(Ship* ship);
 	void addShipToGalata(Galata& level);
 	void addControl(Input control, ShipAction shipAction);
 	virtual bool inputHandle(QInputEvent *event);
+	void addPoints(unsigned int _points);
+	unsigned int points() const;
+	QString name() const;
+
 };
 
 #endif // PLAYER_H

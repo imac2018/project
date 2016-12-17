@@ -2,7 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <iostream>
 class Mode;
+
+using namespace std;
 
 class MainWindow : public QMainWindow
 {

@@ -1,0 +1,7 @@
+C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/CMakeFiles/GLNous.dir
+C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/CMakeFiles/shaders.dir
+C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/CMakeFiles/edit_cache.dir
+C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/CMakeFiles/rebuild_cache.dir
+C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/CMakeFiles/edit_cache.dir
+C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/CMakeFiles/glimac.dir
+C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/CMakeFiles/rebuild_cache.dir

@@ -16,7 +16,7 @@ class Weapon{
 	int delayMax;
 public:
 	Weapon(QPointF position);
-	void shoot(Space& world, QPointF origin);
+	void shoot(Ship* parent, Space& world, QPointF origin);
 	void activate();
 	void stop();
 	bool activated();
@@ -25,8 +25,9 @@ public:
 	protected:
 		int life;
 		int damage;
+		Ship* parent;
 	public:
-		Bullet(int life);
+		Bullet(Ship *parent, int life);
 		virtual void animate();
 		bool isDead() const;
 		void damageEnemy(Enemy* e);
@@ -36,7 +37,9 @@ public:
 		QLineF line;
 		QPointF velocity;
 	public:
-		LaserBullet(int life, const QPointF& pos, float width, float vx);
+		LaserBullet(Ship *parent, int life, float width, float vx);
+		LaserBullet(Ship *parent, int life, float width, float vx, QPointF position);
+		bool isInView(float x1, float x2) const;
 		virtual void paint(QPainter& context) const;
 		ColliderObject* collider() const;
 		void animate();

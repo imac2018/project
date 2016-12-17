@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="GLSteeve" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\glimac\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="shaders">
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 shaders" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="GLSteeve">
+         <Option output="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/GLSteeve.exe" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/../../../../include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include-fixed" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/backward" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/mingw32" />
+            <Add directory="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include" />
+            <Add directory="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/third-party/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 GLSteeve" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="GLSteeve/fast">
+         <Option output="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/GLSteeve.exe" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/../../../../include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include-fixed" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/backward" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/mingw32" />
+            <Add directory="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include" />
+            <Add directory="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/third-party/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 GLSteeve/fast" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="glimac">
+         <Option output="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/libglimac.a" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac" />
+         <Option object_output="./" />
+         <Option type="2" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/../../../../include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include-fixed" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/backward" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/mingw32" />
+            <Add directory="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include" />
+            <Add directory="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/third-party/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/Makefile&quot;  VERBOSE=1 glimac" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="glimac/fast">
+         <Option output="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/libglimac.a" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac" />
+         <Option object_output="./" />
+         <Option type="2" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/../../../../include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include-fixed" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/backward" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/mingw32" />
+            <Add directory="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include" />
+            <Add directory="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/third-party/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/Makefile&quot;  VERBOSE=1 glimac/fast" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Release/glimac/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/fragment.fs.glsl">
+         <Option target="shaders"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/BBox.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/Cone.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/FilePath.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/FreeflyCamera.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/Geometry.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/Image.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/Program.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/SDLWindowManager.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/Shader.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/Sphere.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/TrackballCamera.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/common.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/include/glimac/glm.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/Cone.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/FreeflyCamera.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/Geometry.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/Image.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/Program.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/SDLWindowManager.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/SDLWindowManager.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/Shader.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/Sphere.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/TrackballCamera.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/tiny_obj_loader.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/src/tiny_obj_loader.h">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/main.cpp">
+         <Option target="GLSteeve"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/vertex.vs.glsl">
+         <Option target="shaders"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="C:/Users/steev/Plus/IMAC/Git/project/GLSteeve/glimac/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\glimac\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

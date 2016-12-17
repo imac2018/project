@@ -36,12 +36,15 @@ namespace ShipActions {
 
 class Ship : SpaceObject
 {
-	QPointF position;
-	QRectF bound;
+	Player* parent;
+
+	QSizeF size;
 
 	float acceleration;
 	float power;
 	float life;
+
+	float deadState;
 
 	QPointF velocity;
 
@@ -61,8 +64,11 @@ class Ship : SpaceObject
 	void stopPowerUp();
 
 public:
-
-	Ship(float speed, float power, float life, int superModeDelay,
+	Ship();
+	Ship(Player* parent, float acceleration, float power, float life, int superModeDelay,
+		 float accelerateAmmount, float powerUpAmmount,
+		 Weapon* mainWeapon, Weapon* secondWeapon);
+	Ship(float acceleration, float power, float life, int superModeDelay,
 		 float accelerateAmmount, float powerUpAmmount,
 		 Weapon* mainWeapon, Weapon* secondWeapon);
 	virtual void paint(QPainter& context) const;
@@ -90,6 +96,14 @@ public:
 	void powerUp();
 
 	bool isDead() const;
+	bool isDefinitelyDead() const;
+	bool isInView(float x1, float x2) const;
+
+	void setWorld(Space* world);
+
+	void setParentPlayer(Player* parent);
+
+	void addPoints(int points);
 
 	friend void Galata::addShip(Ship* ship);
 	friend void Enemy::damageShip(Ship* ship);

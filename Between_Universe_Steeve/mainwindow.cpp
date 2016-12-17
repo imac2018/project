@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
 {
 
-	Player* p1 = new Player();
+	Player* p1 = new Player("Yolo");
 
 	p1->addControl(QKeyEvent(QEvent::KeyRelease,Qt::Key_Down,Qt::NoModifier),
 				   &ShipActions::stopDown);
@@ -65,9 +65,39 @@ MainWindow::MainWindow(QWidget *parent) :
 	dockleft->setWidget(w1);
 	dockright->setWidget(w2);
 
-	dynamic_cast<Galata*>(current)->addEnemy(new SquareEnemy(12,6,QPointF(100,250),
-												QPair<QPointF,QPointF>(QPointF(0,0),QPointF(100,100)),QSizeF(20,20)));
+	float x = rand() % 100 + 300;
+	int type;
+	Galata* g = dynamic_cast<Galata*>(current);
+	QSize size = g->space().viewBound().size().toSize();
+	PositionRange range;
+	QPointF pos;
+	Enemy* e;
+	for(int i = 0; i < 50; i++){
+		type = rand()%2;
+		range = PositionRange(QPointF(x - 100 ,0), QPointF(x + size.width(),0));
+		pos = QPointF(x,rand()%size.height());
+		if(type)
+			e = new CircleEnemy(3,6, range, rand()%25+5, pos);
+		else
+			e = new SquareEnemy(3,6, range, QSizeF(rand()%25+5,rand()%25+5),pos);
+		type = rand()%10;
+		if(type>=2 && type<4)
+			e->addBehavior(new B_TranslateAlternate(QPair<float,float>(0,rand()%50+50),
+													QPointF((rand()%50)/25.,(rand()%50)/25.)));
+		else if (type<=2)
+			e->addBehavior(new B_TurnAround(0.1f,60,0));
+		else if(type>6){
+			B_StringCycle* b = new B_StringCycle();
+			b->addBehavior(new B_TranslateAlternate(QPair<float,float>(0,rand()%50+50),
+													QPointF((rand()%50)/25.,(rand()%50)/25.)), 50);
+			b->addBehavior(new B_TurnAround(0.1f,60,0),50);
+			e->addBehavior(b);
+		}
+		g->addEnemy(e);
 
+
+		x += rand() % 100 + 50;
+	}
 
 
 	QTimer* timer = new QTimer(this);

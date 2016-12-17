@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="GLNous" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\glimac\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="GLNous">
+         <Option output="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/GLNous.exe" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/../../../../include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include-fixed" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/backward" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/mingw32" />
+            <Add directory="C:/Users/steev/Downloads/TD5/TD5/glimac/include" />
+            <Add directory="C:/Users/steev/Downloads/TD5/TD5/third-party/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 GLNous" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="GLNous/fast">
+         <Option output="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/GLNous.exe" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/../../../../include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include-fixed" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/backward" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/mingw32" />
+            <Add directory="C:/Users/steev/Downloads/TD5/TD5/glimac/include" />
+            <Add directory="C:/Users/steev/Downloads/TD5/TD5/third-party/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 GLNous/fast" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="shaders">
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 shaders" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="glimac">
+         <Option output="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/libglimac.a" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac" />
+         <Option object_output="./" />
+         <Option type="2" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/../../../../include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include-fixed" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/backward" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/mingw32" />
+            <Add directory="C:/Users/steev/Downloads/TD5/TD5/glimac/include" />
+            <Add directory="C:/Users/steev/Downloads/TD5/TD5/third-party/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/Makefile&quot;  VERBOSE=1 glimac" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="glimac/fast">
+         <Option output="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/libglimac.a" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac" />
+         <Option object_output="./" />
+         <Option type="2" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/../../../../include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include-fixed" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/backward" />
+            <Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/bin/../lib/gcc/mingw32/4.9.2/include/c++/mingw32" />
+            <Add directory="C:/Users/steev/Downloads/TD5/TD5/glimac/include" />
+            <Add directory="C:/Users/steev/Downloads/TD5/TD5/third-party/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/Makefile&quot;  VERBOSE=1 glimac/fast" />
+            <CompileFile command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="C:/PROGRA~2/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/steev/Plus/IMAC/Git/project/build-GLSteeve-CMake_basex86-Default/glimac/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/3D.vs.glsl">
+         <Option target="shaders"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/SDLtemplate.cpp">
+         <Option target="GLNous"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/SDLtemplate2.cpp">
+         <Option target="GLNous"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/fragment.fs.glsl">
+         <Option target="shaders"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/BBox.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/Cone.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/FilePath.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/Geometry.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/Image.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/Program.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/SDLWindowManager.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/Shader.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/Sphere.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/TrackballCamera.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/common.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/include/glimac/glm.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/Cone.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/Geometry.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/Image.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/Program.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/SDLWindowManager.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/SDLWindowManager.hpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/Shader.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/Sphere.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/TrackballCamera.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/tiny_obj_loader.cpp">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/src/tiny_obj_loader.h">
+         <Option target="glimac"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/multiTex3D.fs.glsl">
+         <Option target="shaders"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/normals.fs.glsl">
+         <Option target="shaders"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/tex3D.fs.glsl">
+         <Option target="shaders"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/vertex.vs.glsl">
+         <Option target="shaders"/>
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="C:/Users/steev/Downloads/TD5/TD5/glimac/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\glimac\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

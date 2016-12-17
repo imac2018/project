@@ -7,14 +7,13 @@
 #define SPECIAL_MASK 0x0100ffff
 // if an event doesn't validate this mask, it cannot be an user control
 
-Player::Player() : ship(NULL)
-{
-
-}
+Player::Player(QString name) : ship(NULL), _points(0), _name(name)
+{}
 
 void Player::setShip(Ship *ship)
 {
 	this->ship = ship;
+	ship->setParentPlayer(this);
 }
 
 void Player::addShipToGalata(Galata &level)
@@ -37,6 +36,21 @@ bool Player::inputHandle(QInputEvent *event)
 	}
 	else
 		return false;
+}
+
+void Player::addPoints(unsigned int points)
+{
+	this->_points += points;
+}
+
+unsigned int Player::points() const
+{
+	return _points;
+}
+
+QString Player::name() const
+{
+	return _name;
 }
 
 /**

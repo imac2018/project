@@ -1,22 +1,31 @@
 #include "ship.h"
 #include <memory>
+#include "player.h"
 
 const int superModeWaitDelay = 100;
 
-Ship::Ship(float acceleration, float power, float life, int superModeDelay,
+Ship::Ship(Player *parent, float acceleration, float power, float life, int superModeDelay,
 		   float accelerateAmmount, float powerUpAmmount,
 		   Weapon *mainWeapon, Weapon *secondWeapon)
-	: position(0,0), bound(position,QSizeF(70,30)), acceleration(acceleration), power(power),
+	: parent(parent), size(70,45), acceleration(acceleration), power(power),
 	  life(life), superModeDelay(superModeDelay), accelerateAmmount(accelerateAmmount),
 	  powerUpAmmount(powerUpAmmount), mainWeapon(mainWeapon), secondWeapon(secondWeapon),
-	  sprite(":/images/wolf45J.png")
+	  sprite(":/images/wolf45J.png"), deadState(0)
 {
+}
+
+Ship::Ship(float acceleration, float power, float life, int superModeDelay,
+		   float accelerateAmmount, float powerUpAmmount, Weapon *mainWeapon, Weapon *secondWeapon)
+	: Ship(NULL,acceleration, power, life, superModeDelay, accelerateAmmount, powerUpAmmount,
+		   mainWeapon, secondWeapon)
+{
+
 }
 
 void Ship::paint(QPainter &context) const
 {
 	//context.drawRect(this->bound);
-	context.drawImage(this->bound,sprite);
+	context.drawImage(QRectF(QPointF(0,0), size),sprite);
 }
 
 void Ship::animate()
@@ -45,13 +54,14 @@ void Ship::animate()
 		}
 	}
 
-	this->position += velocity;
-	this->bound.moveTo(position);
+	QPointF actualPos = actualPosition();
+
+	this->moveTo(actualPos + velocity);
 
 	if(mainWeapon->activated())
-		mainWeapon->shoot(*world,position);
+		mainWeapon->shoot(this,*world,actualPos);
 	if(secondWeapon->activated())
-		secondWeapon->shoot(*world,position);
+		secondWeapon->shoot(this,*world,actualPos);
 }
 
 void ShipActions::moveForward(Ship& ship)
@@ -125,9 +135,7 @@ void ShipActions::powerUp(Ship& ship){
 
 ColliderObject *Ship::collider() const
 {
-	std::unique_ptr<float> radius(new float);
-	*radius = bound.width();
-	return new ColliderRect(radius.get(),&position,&bound);
+	return new ColliderRect(QRectF(actualPosition(), size));
 }
 
 void Ship::moveForward()
@@ -137,7 +145,7 @@ void Ship::moveForward()
 
 void Ship::moveBackward()
 {
-	velocity.setX(-acceleration);
+	velocity.setX(-acceleration*0.75);
 }
 
 void Ship::moveUp()
@@ -225,12 +233,35 @@ bool Ship::isDead() const
 	return life <= 0;
 }
 
-void Ship::handleCollision(SpaceObject *o)
+bool Ship::isDefinitelyDead() const
 {
-
+	return life <= 0 && deadState >= 1;
 }
+
+bool Ship::isInView(float, float) const
+{
+	return true;
+}
+
+void Ship::setParentPlayer(Player *parent)
+{
+	this->parent = parent;
+}
+
+void Ship::addPoints(int points)
+{
+	parent->addPoints(points);
+}
+
+void Ship::handleCollision(SpaceObject *)
+{}
 
 void Ship::stopPowerUp(){
 	power -= powerUpAmmount;
 	powerUpCounter = -superModeWaitDelay;
+}
+
+Ship::Ship()
+{
+
 }

@@ -1,5 +1,6 @@
 #include "weapon.h"
 #include "enemy.h"
+#include "ship.h"
 #include <QDebug>
 
 Weapon::Weapon(QPointF position)
@@ -7,10 +8,10 @@ Weapon::Weapon(QPointF position)
 	  position(position)
 {}
 
-void Weapon::shoot(Space &world, QPointF origin)
+void Weapon::shoot(Ship *parent,Space &world, QPointF origin)
 {
 	if(!currentDelay){
-		world.addObject(new LaserBullet(400,origin+position,15,60));
+		world.addObject(new LaserBullet(parent, 400,15,60, position + origin));
 		currentDelay = delayMax;
 	}
 	else
@@ -33,8 +34,8 @@ bool Weapon::activated()
 	return _activated;
 }
 
-Weapon::Bullet::Bullet(int life)
-	: life(life)
+Weapon::Bullet::Bullet(Ship* parent, int life)
+	: parent(parent), life(life)
 {
 
 }
@@ -53,10 +54,22 @@ void Weapon::Bullet::damageEnemy(Enemy *e)
 	e->life -= damage;
 }
 
-Weapon::LaserBullet::LaserBullet(int life, const QPointF& pos, float width, float vx)
-	: Bullet(life), line(pos,pos+QPointF(width,0)), velocity(vx,0)
+Weapon::LaserBullet::LaserBullet(Ship* parent, int life, float width, float vx)
+	: Bullet(parent, life), line(QPointF(0,0),QPointF(width,0)),
+	  velocity(vx,0)
 {
+	this->damage = 10;
+}
 
+Weapon::LaserBullet::LaserBullet(Ship* parent, int life, float width, float vx, QPointF position)
+	: LaserBullet(parent, life, width, vx)
+{
+	moveTo(position);
+}
+
+bool Weapon::LaserBullet::isInView(float x1, float x2) const
+{
+	return actualPosition().x() + line.x1() < x2 && actualPosition().x() + line.x2() > x1;
 }
 
 void Weapon::LaserBullet::paint(QPainter &context) const
@@ -66,13 +79,16 @@ void Weapon::LaserBullet::paint(QPainter &context) const
 
 ColliderObject *Weapon::LaserBullet::collider() const
 {
-	return new ColliderLine(&line);
+	QLineF line = this->line.translated(actualPosition());
+	return new ColliderLine(QLine(line.x1(),line.y1(),
+								  line.x2() + velocity.x() * 0.75,
+								  line.y2() + velocity.y() * 0.75));
 }
 
 void Weapon::LaserBullet::animate()
 {
 	Bullet::animate();
-	line.translate(velocity);
+	moveTo(actualPosition() + velocity);
 }
 
 void Weapon::LaserBullet::handleCollision(SpaceObject *o)
@@ -80,7 +96,12 @@ void Weapon::LaserBullet::handleCollision(SpaceObject *o)
 	Enemy* e = dynamic_cast<Enemy*>(o);
 	if(e != NULL){
 		damageEnemy(e);
-		this->life = 0;
-		dynamic_cast<SquareEnemy*>(e)->c = QColor(255,0,0);
+		if(e->isDead()){
+			parent->addPoints(e->points());
+		}
+		if(this->life>5)
+			this->life = 5;
+		velocity =(e->actualPosition() - actualPosition()) * 0.5;
+		//moveTo(e->actualPosition().x());
 	}
 }

@@ -9,7 +9,6 @@
 #include <QLineF>
 
 class ColliderObject{
-
 protected:
 
 	enum ColliderType{
@@ -21,52 +20,58 @@ protected:
 		Polygone,
 		NbColliderType
 	};
-	ColliderType type;
-	ColliderType getType(const ColliderObject& o) const;
+private:
+	QPointF _center;
+	float _radius;
+	ColliderType _type;
 public:
-	ColliderObject(ColliderType type);
+	ColliderObject(ColliderType type, float radius, const QPointF& center);
+	virtual bool isNearTo(const ColliderObject& object) const;
 	virtual bool collisionWithObject(const ColliderObject& object) const = 0;
 	virtual bool collisionWithPoint(const QPointF& A) const = 0;
 	virtual int collisionWithSegment(const QPointF& A, const QPointF& B) const = 0;
+	virtual void translate(float tx, float ty);
+	ColliderObject* lightTranslate(float tx, float ty);
+
+	QPointF center() const;
+	float radius() const;
+	ColliderType type() const;
 };
 
 class ColliderCircle : public ColliderObject{
-protected:
-	const float* radius;
-	const QPointF* center;
 public:
-	ColliderCircle(const float* radius, const QPointF* center);
+	ColliderCircle(const float radius, const QPointF center);
 	// ColliderObject interface
 public:
 	bool collisionWithObject(const ColliderObject &object) const;
 	bool collisionWithPoint(const QPointF &A) const;
 	int collisionWithSegment(const QPointF &A, const QPointF &B) const;
-	float getRadius() const;
-	const QPointF& getCenter() const;
 };
 
-class ColliderRect : public ColliderCircle{
-	const QRectF* _bounds;
+class ColliderRect : public ColliderObject{
+	QRectF _bounds;
 public:
-	ColliderRect(const float *radius, const QPointF* center, const QRectF* rect);
+	ColliderRect(const QRectF& rect);
 
 	// ColliderObject interface
 public:
 	bool collisionWithObject(const ColliderObject &object) const;
 	bool collisionWithPoint(const QPointF &A) const;
 	int collisionWithSegment(const QPointF &A, const QPointF &B) const;
+	void translate(float tx, float ty);
 	const QRectF& bounds() const;
 };
 
 class ColliderLine : public ColliderObject{
-	const QLineF* _line;
+	QLineF _line;
 public:
-	ColliderLine(const QLineF* line);
+	ColliderLine(const QLineF& line);
 	// ColliderObject interface
 public:
 	bool collisionWithObject(const ColliderObject &object) const;
 	bool collisionWithPoint(const QPointF &A) const;
 	int collisionWithSegment(const QPointF &A, const QPointF &B) const;
+	void translate(float tx, float ty);
 	const QLineF& line() const;
 };
 

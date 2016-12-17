@@ -17,13 +17,15 @@ SOURCES += *.cpp \
     space.cpp \
     colliderobject.cpp \
     enemy.cpp \
-    weapon.cpp
+    weapon.cpp \
+    items.cpp
 
 HEADERS  += *.h \
     space.h \
     colliderobject.h \
     enemy.h \
-    weapon.h
+    weapon.h \
+    items.h
 
 FORMS    += mainwindow.ui
 
