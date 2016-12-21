@@ -3,5 +3,13 @@
         <file>images/falconVB.png</file>
         <file>images/imac.png</file>
         <file>images/wolf45J.png</file>
+        <file>images/bettleR.png</file>
+        <file>images/BlueBulletBull.png</file>
+        <file>images/background.png</file>
+        <file>levels/level1.xml</file>
+        <file>images/border.png</file>
+        <file>images/enemy1.png</file>
+        <file>images/enemy2.png</file>
+        <file>images/enemy3.png</file>
     </qresource>
 </RCC>

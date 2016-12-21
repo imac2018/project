@@ -1,0 +1,51 @@
+<space initialx="5" initialy="20" background="images/background.png"
+		width="900" height="700" xend="1700" velocity="2">
+	<enemy type="circle" rangex1="300" rangex2="900" life="8" damage="3"
+			x="600" y="300" radius="16">
+			<behavior type="sinusoidal" module="60" phase="0.001"/>
+	</enemy>
+	<enemy type="circle" rangex1="200" life="8" damage="3" sprite="images/enemy1.png"
+	x="260" y="300" radius="16"></enemy>
+	<enemy type="rect" rangex1="300" rangex2="900" life="8" damage="3"
+	x="460" y="100" width="35" height="35">
+		<behavior type="sinusoidal" module="15" coefsin="0"/>
+	</enemy>
+	<enemy type="circle" rangex1="600" life="8" damage="3"  sprite="images/enemy1.png"
+	x="680" y="450" radius="16">
+		<behavior type="translatealt" x="-3"/>
+		<item type="up" life="400"></item>
+	</enemy>
+	<enemy type="circle" rangex1="1300" life="8" damage="3"
+	x="1500" y="280" radius="16">
+		<behavior type="translate" x="-3"/>
+		<item type="shield" life="160"/>
+	</enemy>
+	<enemy type="circle" rangex1="1300" life="8" damage="3"
+	x="1600" y="470" radius="16">
+		<behavior type="translate" x="2"/>
+		<item type="up" life="400"/>
+	</enemy>
+	<enemy type="rect" rangex1="1280" life="8" damage="3"  sprite="images/enemy2.png"
+	x="1350" y="100" width="70" height="35">
+		<behavior type="rotate" distance="90"/>
+	</enemy>
+	<enemy type="rect" rangex1="1500" life="8" damage="3"
+	x="1600" y="580" width="35" height="35">
+		<item type="up" life="400"/>
+	</enemy>
+	<enemy type="rect" rangex1="1700" life="8" damage="3"  sprite="images/enemy3.png"
+	x="460" y="100" width="35" height="35">
+		<behavior type="sinusoidal" module="15" coefsin="0"/>
+	</enemy>
+	<enemy type="rect" rangex1="1900" life="8" damage="3"
+	x="1910" y="420" width="16" height="32"></enemy>
+	<enemy type="rect" rangex1="1680" life="8" damage="3"
+	x="1700" y="280" width="18" height="15"></enemy>
+	<enemy type="circle" rangex1="1520" life="8" damage="3"
+	x="1570" y="150" radius="18">
+		<item type="up" life="360"/>
+	</enemy>
+	<item type="up" rangex1="600" life="400" x="700" y="470"></item>
+	<item type="up" rangex1="500" life="400" x="510" y="300"></item>
+	<item type="shield" rangex1="600" life="200" x="720" y="150"></item>
+</space>
