@@ -1,2 +1,0 @@
-C:\PROGRA~2\CODEBL~1\MinGW\bin\ar.exe qc libglimac.a  CMakeFiles/glimac.dir/src/Cone.cpp.obj CMakeFiles/glimac.dir/src/FreeflyCamera.cpp.obj CMakeFiles/glimac.dir/src/Geometry.cpp.obj CMakeFiles/glimac.dir/src/Image.cpp.obj CMakeFiles/glimac.dir/src/Program.cpp.obj CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.obj CMakeFiles/glimac.dir/src/Shader.cpp.obj CMakeFiles/glimac.dir/src/Sphere.cpp.obj CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.obj CMakeFiles/glimac.dir/src/TrackballCamera.cpp.obj
-C:\PROGRA~2\CODEBL~1\MinGW\bin\ranlib.exe libglimac.a
