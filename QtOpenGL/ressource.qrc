@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>shaders/advanced_vertex.vs.glsl</file>
+        <file>shaders/advanced_fragment.fs.glsl</file>
+        <file>shaders/minimal_vertex.vs.glsl</file>
+        <file>shaders/minimal_fragment.fs.glsl</file>
+        <file>shaders/fragment.fs.glsl</file>
+        <file>shaders/vertex.vs.glsl</file>
+        <file>assets/button.png</file>
+        <file>assets/button_hover.png</file>
+        <file>assets/button_pressed.png</file>
+        <file>assets/loading.png</file>
+        <file>assets/sol.jpg</file>
+    </qresource>
+</RCC>
