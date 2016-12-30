@@ -33,7 +33,7 @@ public:
 	/**
 	 * @brief render the current frame
 	 */
-	virtual void render(Game&) = 0;
+	virtual void render(Game&) const = 0;
 
 	/**
 	 * @brief clear the pipeline

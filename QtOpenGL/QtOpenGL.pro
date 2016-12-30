@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl
+QT       += core gui opengl multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,13 +18,16 @@ SOURCES += main.cpp\
 		glexception.cpp \
 		object3d.cpp \
 		mode.cpp \
+		map.cpp \
 		game.cpp \
 		renderer.cpp \
 		camera.cpp \
 		menu.cpp \
 		tools.cpp \
 		level.cpp \
-		gui.cpp
+		gui.cpp \
+    player.cpp \
+    audio.cpp
 
 HEADERS  += mainwindow.h \
 		glwidget.h \
@@ -32,13 +35,16 @@ HEADERS  += mainwindow.h \
 		object3d.h \
 		tools.h \
 		mode.h \
+		map.h\
 		game.h \
 		renderer.h \
 		camera.h \
 		menu.h \
 		vertex.h \
 		level.h \
-		gui.h
+		gui.h \
+    player.h \
+    audio.h
 
 RESOURCES += \
 	ressource.qrc

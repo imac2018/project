@@ -20,6 +20,8 @@ class Game : public QObject
 	Mode* current;
 	Mode* next;
 
+	Mode* _firstMode;
+
 	State state;
 	float loadingState;
 	Renderer loadingRenderer;
@@ -41,7 +43,7 @@ class Game : public QObject
 	QPointF windowToGL(QPointF p);
 
 public:
-	Game(QWidget* view, Mode* firstMode);
+	Game(QWidget* view, Mode* _firstMode);
 	void initializeRender();
 	void changeMode(Mode* m);
 
@@ -52,6 +54,8 @@ public:
 	void updateProjection();
 
 	Renderer& renderer();
+
+	Mode* firstMode();
 protected:
 	bool eventFilter(QObject *, QEvent *event);
 };

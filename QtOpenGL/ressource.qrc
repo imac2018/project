@@ -10,6 +10,15 @@
         <file>assets/button_hover.png</file>
         <file>assets/button_pressed.png</file>
         <file>assets/loading.png</file>
-        <file>assets/sol.jpg</file>
+        <file>assets/sol_2.png</file>
+        <file>assets/sol_3.png</file>
+        <file>assets/sol_4.png</file>
+        <file>assets/sol_default.png</file>
+        <file>level/map1.ppm</file>
+        <file>assets/plafond_2.png</file>
+        <file>assets/plafond_default.png</file>
+        <file>models/box.obj</file>
+        <file>models/concave_polygon.obj</file>
+        <file>models/graou.obj</file>
     </qresource>
 </RCC>

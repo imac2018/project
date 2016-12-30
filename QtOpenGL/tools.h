@@ -27,6 +27,14 @@ inline aiVector3D toAiVector(const QVector3D v){
 	return aiVector3D(v.x(),v.y(),v.z());
 }
 
+inline aiVector2D toAiVector2D(const aiVector3D &v){
+	return aiVector2D(v.x,v.y);
+}
+
+inline aiColor3D toAiColor3D(const aiColor4D &c){
+	return aiColor3D(c.r,c.g,c.b);
+}
+
 inline const float* value_ptr(const aiMatrix4x4& m){
 	return &m.a1;
 }

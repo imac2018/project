@@ -63,12 +63,17 @@ float Camera::rotationTop() const
 	return m_fTheta;
 }
 
-const QVector3D &Camera::position()
+void Camera::setPosition(const QVector3D& pos)
+{
+	m_Position = pos;
+}
+
+const QVector3D &Camera::position() const
 {
 	return m_Position;
 }
 
-const QVector3D &Camera::frontVector()
+const QVector3D &Camera::frontVector() const
 {
 	return m_FrontVector;
 }

@@ -7,7 +7,7 @@ layout(location = 3) in vec3 normal;
 
 
 // global parameter
-uniform vec3 globalLight;
+uniform vec4 globalLight;
 
 // object parameter
 uniform mat4 objectMVMatrix;

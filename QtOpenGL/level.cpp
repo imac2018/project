@@ -1,13 +1,24 @@
 #include "level.h"
 #include "game.h"
+#include "menu.h"
 #include "object3d.h"
 #include "tools.h"
 #include <QMouseEvent>
 
-Level::Level()
-	: direction(NORTH), initialY(2.f)
+void Level::loadModels()
 {
+	QList<Object3D*> objects = Object3D::importFromFile(":/models/graou.obj");
+	if(objects.length()){
+		models[Beer] = objects.first();
+	}
+}
 
+Level::Level(Mode &previous, Mode *next)
+	: previous(previous), next(next),
+	  player(*this, &map), map(":/level/map1.ppm", *this),
+	  t(0), tInc(0.005), models(ModelsCount)
+{
+	loadModels();
 }
 
 void Level::initialize(Game & game, float &currentState)
@@ -18,49 +29,84 @@ void Level::initialize(Game & game, float &currentState)
 		renderer.resetGlobal();
 		renderer.projectionType = Renderer::Ortho;
 		game.updateProjection();
-		currentState = 0.25f;
+		dirLight.color = QColor::fromRgbF(0.75,0.47,0.7);
+		dirLight.direction = QVector3D(-0.3,-0.8,-0.5).normalized();
+		torchLight.power = 0.75f;
+		torchLight.color = QColor::fromRgbF(1,0.75,0.8);
+		transformLight.setToIdentity();
+		transformLight.rotate(1,1,0,0);
+		currentState = 0.1f;
+	}
+	else if(currentState<0.2f){
+		if(next != NULL){
+			nextDialog.initialize(renderer,
+								  new ChangeModeButton(game, next,
+														 renderer,"Yes!",nextDialog.confirmBtnBounds()),
+								  "Do you want to go to next step ?");
+		}
+		else{
+			nextDialog.initialize(renderer,
+								  new ChangeModeButton(game, game.firstMode(),
+														 renderer,"Yes!",nextDialog.confirmBtnBounds()),
+								  "Congratulation! You finish the Game!"
+								  "\nDo you want to return to the menu?");
+		}
+		currentState = 0.2f;
+	}
+	else if(currentState<0.3){
+		previousDialog.initialize(renderer,
+							  new ChangeModeButton(game, &previous,
+												   renderer,"Yes...",nextDialog.confirmBtnBounds()),
+							  "Do you want to go back ?");
+		currentState = 0.3f;
 	}
 	else if(currentState<0.4f){
-		playGui.append(new Button(renderer,"ok",QRectF(-0.25f,-0.75f,0.5f,0.1f)));
-		renderer.viewCam.reset();
-		rotationTarget = renderer.viewCam.rotationLeft();
-		rotationSpeed = 0;
-		translateSpeed = 0;
-		translateTarget = renderer.viewCam.position();
-		upSpeed = 0;
+
+		exitDialog.initialize(renderer,
+							  new ChangeModeButton(game,game.firstMode(),renderer,
+												   "Yes...",nextDialog.confirmBtnBounds()),
+							  "Do you want to exit ?");
 		currentState = 0.4f;
 	}
 	else if(currentState<0.5f){
-		foreach(Object3D* o, playGui.objects()){
-			renderer.addObject(*o);
-		}
+
+		nextDialog.appendToGui(playGui);
+		previousDialog.appendToGui(playGui);
+		exitDialog.appendToGui(playGui);
+		hideDialog();
 		currentState = 0.5f;
+	}
+	else if(currentState<0.55){
+		playGui.appendBtn(new ToggleDialogButton(&exitDialog,true,renderer,
+												 "Exit",QRectF(-0.9,-0.9,0.3,0.1)));
+		currentState = 0.55f;
 	}
 	else if(currentState<0.6){
 		currentState+=0.01f;
 	}
 	else if(currentState<0.75f){
-		Object3D* o = new Object3D(renderer.makeTexturedFace(90, 0,0,500.f));
-		o->texture= renderer.addTexture(":/assets/sol.jpg");
-		o->transformM.translate(0,-1.f,0);
-		objects.append(o);
-		currentState = 0.8f;
+		currentState = 0.6f + map.initialize(game)*0.15f;
 	}
 	else if(currentState<0.95f){
+		playGui.addObjectsToRenderer(renderer);
+		foreach(Object3D* o, models){
+			renderer.addObject(*o);
+		}
 		currentState = 0.96f;
 	}
 	else{
+		player.setPosition(map.initialMapPosition(),
+						   map.initialRealPosition(),
+						   map.initialOrientation());
 		renderer.initializeVBO();
 		renderer.initializeVAO();
 		renderer.resetGlobal();
-		renderer.viewCam.translateUp(initialY);
 		currentState = 1;
 	}
 }
 
 bool Level::inputHandle(Game & game, QInputEvent * e)
 {
-	Renderer& renderer = game.renderer();
 	QMouseEvent* mouseE = dynamic_cast<QMouseEvent*>(e);
 	if(mouseE){
 		if(mouseE->type() == QEvent::MouseMove){
@@ -73,124 +119,31 @@ bool Level::inputHandle(Game & game, QInputEvent * e)
 			return playGui.handleMouseRelease(mouseE);
 		}
 	}
-	Camera& cam = renderer.viewCam;
-	QKeyEvent* keyE = dynamic_cast<QKeyEvent*>(e);
-	if(keyE && isZero(rotationSpeed) && isZero(rotationSpeed)){
-		if(keyE->type() == QEvent::KeyPress){
-			switch (keyE->key()){
-			case Qt::Key_Left:
-				rotationTarget = cam.rotationLeft() + HALFPI_f;
-				direction = (Orientation)abs(((direction-1)%OrientationCount));
-				rotationSpeed = +0.2f;
-				return true;
-			case Qt::Key_Right:
-				rotationTarget = cam.rotationLeft() - HALFPI_f;
-				direction = (Orientation)abs(((direction+1)%OrientationCount));
-				rotationSpeed = -0.2f;
-				return true;
-			case Qt::Key_Up:
-				translateTarget = cam.position() + (cam.frontVector() * 10.f);
-				translateSpeed = 1.f;
-				upSpeed = 0.2f;
-				return true;
-			case Qt::Key_Down:
-				translateTarget = cam.position() + (cam.frontVector() * -10.f);
-				translateSpeed = -1.f;
-				upSpeed = 0.2f;
-				return true;
-			default:
-				break;
-			}
-		}
-		else if(keyE->type() == QEvent::KeyRelease){
-
-		}
-	}
-	return false;
-}
-
-bool Level::testTargetPos(const Camera& c) const{
-	return isZero(c.x() - translateTarget.x()) &&
-			isZero(c.y() - translateTarget.y()) &&
-			isZero(c.z() - translateTarget.z());
-
+	return player.inputHandle(game,e);
 }
 
 void Level::update(Game & game)
 {
-	Renderer& renderer = game.renderer();
-	Camera& cam = renderer.viewCam;
-	if(rotationSpeed>0.01f){
-		if(cam.rotationLeft() + rotationSpeed > rotationTarget){
-			cam.rotateLeft(rotationTarget - cam.rotationLeft());
-			rotationSpeed = 0;
-		}
-		cam.rotateLeft(rotationSpeed);
+	t+=tInc;
+	if(t>1.f){
+		t=1.f;
+		tInc*=-1;
+		transformLight.setToIdentity();
+		transformLight.rotate(1,1,0,0);
 	}
-	else if(rotationSpeed<-0.01f){
-		if(cam.rotationLeft() + rotationSpeed < rotationTarget){
-			cam.rotateLeft(rotationTarget - cam.rotationLeft());
-			rotationSpeed = 0;
-		}
-		cam.rotateLeft(rotationSpeed);
-	}
-	Orientation direction = this->direction;
-	if(translateSpeed<-0.01f){
-		direction = (Orientation)((this->direction+2)%(OrientationCount));
-	}
-	if(!isZero(translateSpeed)){
-		switch(direction){
-		case NORTH:
-			if(cam.z() + (translateSpeed * cam.frontVector()).z() < translateTarget.z()){
-				cam.moveFront((translateTarget.z() - cam.z())/cam.frontVector().z());
-				translateSpeed = 0;
-			}
-			break;
-		case EAST:
-			if(cam.x() + (translateSpeed * cam.frontVector()).x() > translateTarget.x()){
-				cam.moveFront((translateTarget.x() - cam.x())/cam.frontVector().x());
-				translateSpeed = 0;
-			}
-			break;
-		case SOUTH:
-			if(cam.z() + (translateSpeed * cam.frontVector()).z() > translateTarget.z()){
-				cam.moveFront((translateTarget.z() - cam.z())/cam.frontVector().z());
-				translateSpeed = 0;
-			}
-			break;
-		case WEST:
-			if(cam.x() + (translateSpeed * cam.frontVector()).x() < translateTarget.x()){
-				cam.moveFront((translateTarget.x() - cam.x())/cam.frontVector().x());
-				translateSpeed = 0;
-			}
-			break;
-		}
-		cam.moveFront(translateSpeed);
-
-		if(upSpeed>0.01f){
-			cam.translateUp(upSpeed);
-			if(cam.y()>=initialY+0.75f){
-				cam.translateUp(initialY+0.75f - cam.y());
-				upSpeed *= -1;
-			}
-		}
-		else if(upSpeed<-0.01f){
-			cam.translateUp(upSpeed);
-			if(cam.y()<=initialY){
-				cam.translateUp(initialY - cam.y());
-				upSpeed *= -1;
-			}
-		}
-	}
-	else
-	{
-		if(!isZero(cam.y()-initialY))
-			cam.translateUp(initialY-cam.y());
+	else if(t<0.f){
+		t=0.f;
+		tInc*=-1;
+		transformLight.setToIdentity();
+		transformLight.rotate(-1,1,0,0);
 	}
 
+	dirLight.direction = (transformLight * QVector4D(dirLight.direction)).toVector3D();
+	player.update(game);
+	playGui.update();
 }
 
-void Level::render(Game & game)
+void Level::render(Game & game) const
 {
 	Renderer& renderer = game.renderer();
 	renderer.initRender();
@@ -198,14 +151,18 @@ void Level::render(Game & game)
 	glEnable(GL_DEPTH_TEST);
 	renderer.projectionType = Renderer::Perspective;
 	game.updateProjection();
-	renderer.bindCamera();
+	renderer.bindShader(Renderer::Normal);
+	renderer.bindCamera(player.camera());
+	renderer.bindDirectionalLight(dirLight);
+	renderer.bindTorchLight(torchLight);
 	renderer.draw(objects);
+	map.draw(renderer);
+	Object3D o(*models[Beer]);
+	o.transformM.translate(map.caseCenter(5,17));
+	o.transformM.scale(2);
+	renderer.draw(&o);
 
-	glDisable(GL_DEPTH_TEST);
-	renderer.projectionType = Renderer::Ortho;
-	game.updateProjection();
-	renderer.releaseCamera();
-	renderer.draw(playGui.objects());
+	playGui.render(game);
 
 	renderer.endRender();
 }
@@ -216,4 +173,21 @@ void Level::clear(Game & game)
 	renderer.clearVAO();
 	renderer.clearVBO();
 	renderer.clearTextures();
+}
+
+void Level::askPreviousMode()
+{
+	previousDialog.show();
+}
+
+void Level::askNextMode()
+{
+	nextDialog.show();
+}
+
+void Level::hideDialog()
+{
+	nextDialog.hide();
+	previousDialog.hide();
+	exitDialog.hide();
 }

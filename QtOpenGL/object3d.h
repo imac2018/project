@@ -30,6 +30,7 @@ public:
 	QMatrix4x4 transformM;
 
 	Object3D(QList<Vertex3D> vertex, const QColor &color, int drawMode = GL_TRIANGLES);
+	Object3D(QList<Vertex3D> vertex, int drawMode = GL_TRIANGLES);
 	Object3D(const QColor& color, int drawMode = GL_TRIANGLES);
 	Object3D(const Object3D& other);
 

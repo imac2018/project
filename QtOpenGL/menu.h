@@ -17,7 +17,7 @@ public:
 	void initialize(Game &, float &currentState);
 	bool inputHandle(Game &, QInputEvent *);
 	void update(Game &);
-	void render(Game &);
+	void render(Game &) const;
 	void clear(Game &);
 };
 

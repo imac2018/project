@@ -1,9 +1,12 @@
 #include "object3d.h"
 #include "assimp/vector2.h"
+#include "tools.h"
 
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
+
+#include <QFile>
 
 #include "glexception.h"
 
@@ -13,6 +16,10 @@ Object3D::Object3D(QList<Vertex3D> vertex, const QColor &globalColor, int drawMo
 {
 
 }
+
+Object3D::Object3D(QList<Vertex3D> vertex, int drawMode)
+	: Object3D(vertex,QColor(255,255,255))
+{}
 
 Object3D::Object3D(const QColor &globalColor, int drawMode)
 	: diffuseColor(globalColor), ambiantColor(globalColor),
@@ -62,28 +69,96 @@ void Object3D::setGlobalColor(const QColor &color)
 	diffuseColor = ambiantColor = specularColor = color;
 }
 
+QList<Vertex3D> vertexFromTexturedMesh(aiMesh* mesh){
+	QList<Vertex3D> vertex;
+	for(unsigned j=0;j<mesh->mNumFaces;j++){
+		aiFace* face = mesh->mFaces + j;
+		for(unsigned k=0;k<3;k++){
+			int indice = face->mIndices[k];
+			vertex.append(Vertex3D(mesh->mVertices[indice],
+										aiColor3D(1,1,1),
+										toAiVector2D(mesh->mTextureCoords[0][indice]),
+										mesh->mNormals[indice]));
+		}
+	}
+	return vertex;
+}
+QList<Vertex3D> vertexFromColoredMesh(aiMesh* mesh){
+	QList<Vertex3D> vertex;
+	for(unsigned j=0;j<mesh->mNumFaces;j++){
+		aiFace* face = mesh->mFaces + j;
+		for(unsigned k=0;k<3;k++){
+			int indice = face->mIndices[k];
+			vertex.append(Vertex3D(mesh->mVertices[indice],
+										toAiColor3D(mesh->mColors[0][indice]),
+										aiVector2D(0,0),
+										mesh->mNormals[indice]));
+		}
+	}
+	return vertex;
+}
+QList<Vertex3D> vertexFromBlankMesh(aiMesh* mesh){
+	QList<Vertex3D> vertex;
+	for(unsigned j=0;j<mesh->mNumFaces;j++){
+		aiFace* face = mesh->mFaces + j;
+		for(unsigned k=0;k<3;k++){
+			int indice = face->mIndices[k];
+			vertex.append(Vertex3D(mesh->mVertices[indice],
+										aiColor3D(1,1,1),
+										aiVector2D(0,0),
+										mesh->mNormals[indice]));
+		}
+	}
+	return vertex;
+}
+
 QList<Object3D *> Object3D::importFromFile(QString filepath)
 {
-	/*Assimp::Importer importer;
+	Assimp::Importer importer;
+	QFile file(filepath);
+	file.open(QIODevice::ReadOnly);
 
-	const aiScene* scene = importer.ReadFile( filepath.toStdString(),
-			aiProcess_CalcTangentSpace       |
-			aiProcess_Triangulate            |
-			aiProcess_JoinIdenticalVertices  |
-			aiProcess_SortByPType);
+	char* data = new char[file.size()];
+	file.read(data,file.size());
+
+	const aiScene* scene = importer.ReadFileFromMemory(data, file.size(),
+			aiProcess_Triangulate	|
+			aiProcess_GenNormals	|
+			aiProcess_GenUVCoords);
+	delete data;
+	file.close();
 
 	if( !scene){
-		throw GLException("3D Import Error", importer.GetErrorString());
+		qDebug() << importer.GetErrorString();
+		throw GLException("3D Import Error",
+						  QString(importer.GetErrorString()));
 		//throw std::exception(importer.GetErrorString());
 	}
-*/
-	return QList<Object3D*>(); //ToDo
+	QList<Object3D*> _return;
+	for(unsigned i=0;i<scene->mNumMeshes;i++){
+		aiMesh* mesh = scene->mMeshes[i];
+		aiMaterial* m = scene->mMaterials[mesh->mMaterialIndex];
+		if(mesh->mTextureCoords[0]==NULL)
+			if(mesh->mColors[0]==NULL)
+				_return.append(new Object3D(vertexFromBlankMesh(mesh)));
+			else
+				_return.append(new Object3D(vertexFromColoredMesh(mesh)));
+		else
+			_return.append(new Object3D(vertexFromTexturedMesh(mesh)));
+	}
+	return _return; //ToDo
 }
 
 Vertex3D::Vertex3D(aiVector3D position, aiColor3D color, aiVector2D texCoord,
 				   aiVector3D normal, aiVector3D bitangente, aiVector3D tangente)
 	: position(position), color(color), texCoord(texCoord),
 	  normal(normal), bitangente(bitangente), tangente(tangente)
+{}
+
+Vertex3D::Vertex3D(aiVector3D position, aiColor3D color,
+				   aiVector2D texCoord, aiVector3D normal)
+	: position(position), color(color), texCoord(texCoord),
+	  normal(normal)
 {}
 
 Vertex3D::Vertex3D(aiVector3D position, aiColor3D color)

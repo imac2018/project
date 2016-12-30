@@ -15,9 +15,14 @@
 class QMatrix4x4;
 class Object3D;
 
-struct Light{
+struct DirectionalLight{
 	QVector3D direction;
 	QColor color;
+};
+
+struct TorchLight{
+	QColor color;
+	float power;
 };
 
 class Renderer
@@ -57,10 +62,8 @@ private:
 	QMatrix4x4 currentMVMatrix;
 	QMatrix4x4 currentMVPMatrix;
 	QColor globalIllumination;
-	Light light;
 	QColor ambiantLight;
 	bool lock;
-	bool cameraBound;
 
 	QList<Vertex3D> vertexList;
 	QList<QOpenGLTexture*> texturesList;
@@ -94,7 +97,6 @@ private:
 	void minimalDraw(const Object3D *o);
 
 public:
-	Camera viewCam;
 	ProjectionType projectionType;
 
 	Renderer();
@@ -111,7 +113,13 @@ public:
 
 	void bindShader(ShaderType shaderType);
 
-	void bindCamera();
+	void bindDirectionalLight(const DirectionalLight& light);
+	void releaseDirectionalLight();
+
+	void bindTorchLight(const TorchLight& light);
+	void releaseTorchLight();
+
+	void bindCamera(const Camera& cam);
 	void releaseCamera();
 
 	void draw(const Object3D* o);
@@ -123,10 +131,12 @@ public:
 
 	void setIndex(Object3D& o);
 
-	Object3D makeColoredFace(float rotationX, float rotationY, float rotationZ, QColor color,
-							 float scale=1);
+	Object3D makeColoredFace(float rotationX, float rotationY, float rotationZ,
+							 float translationX, float translationY, float translationZ,
+							 QColor color, float scale=1);
 	Object3D makeTexturedFace(float rotationX, float rotationY, float rotationZ,
-							  float scale=1, int repeat=1);
+							  float translationX, float translationY, float translationZ,
+							  float scale=1, float repeat=1);
 
 };
 

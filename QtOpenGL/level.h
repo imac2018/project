@@ -3,51 +3,57 @@
 
 #include "mode.h"
 #include "gui.h"
+#include "player.h"
+#include "map.h"
+#include "renderer.h"
 
 class Camera;
 
 class Level : public Mode
 {
-	enum Orientation{
-		NORTH=0,
-		EAST,
-		SOUTH,
-		WEST,
-		OrientationCount
+public:
+	enum ModelType{
+		Beer = 0,
+		ModelsCount
 	};
-
-	enum ModelObject{
-		WallFace,
-		WallSide,
-		Ground
-	};
+private:
+	Player player;
+	Map map;
 
 	Gui playGui;
+
 	QVector<Object3D*> models;
 	QList<Object3D*> objects;
 
-	Orientation direction;
+	Dialog nextDialog;
+	Dialog previousDialog;
+	Dialog exitDialog;
 
-	float rotationSpeed;
-	float rotationTarget;
+	Mode& previous;
+	Mode* next;
 
-	float translateSpeed;
-	QVector3D translateTarget;
+	DirectionalLight dirLight;
+	TorchLight torchLight;
 
-	float upSpeed;
-	float initialY;
+	QMatrix4x4 transformLight;
+	float t;
+	float tInc;
 
-	bool testTargetPos(const Camera& c) const;
+	void loadModels();
+
 public:
-	Level();
+	Level(Mode &previous, Mode* next);
 
-	// Mode interface
-public:
 	void initialize(Game &, float &currentState);
 	bool inputHandle(Game &, QInputEvent *e);
 	void update(Game &);
-	void render(Game &);
+	void render(Game &) const;
 	void clear(Game &);
+
+	void askPreviousMode();
+	void askNextMode();
+
+	void hideDialog();
 };
 
 #endif // LEVEL_H

@@ -20,20 +20,15 @@ void Menu::initialize(Game &game, float &currentState)
 		currentState = 0.25f;
 	}
 	else if(currentState<0.4f){
-		gui.append(new ChangeModeButton(game, new Level(),
+		gui.appendBtn(new ChangeModeButton(game, new Level(*this, NULL),
 										renderer,"Yolo",QRectF(-0.25f,-0.75f,0.5f,0.1f)));
-
-		objects.append(gui.objects());
 		currentState = 0.5f;
 	}
 	else if(currentState<0.6){
 		currentState+=0.004f;
 	}
 	else if(currentState<0.75f){
-		QList<Object3D*>::iterator j;
-		for(j=objects.begin();j!=objects.end();j++){
-			renderer.addObject(**j);
-		}
+		gui.addObjectsToRenderer(renderer);
 		currentState = 0.75f;
 	}
 	else if(currentState<0.95f){
@@ -69,13 +64,13 @@ void Menu::update(Game &)
 
 }
 
-void Menu::render(Game &game)
+void Menu::render(Game &game) const
 {
 	Renderer& renderer = game.renderer();
 	renderer.projectionType = Renderer::Ortho;
 	game.updateProjection();
 	renderer.initRender();
-	renderer.draw(objects);
+	gui.render(game);
 	renderer.endRender();
 }
 
@@ -85,6 +80,7 @@ void Menu::clear(Game &game)
 	renderer.clearVAO();
 	renderer.clearVBO();
 	renderer.clearTextures();
+	gui.clear();
 }
 
 

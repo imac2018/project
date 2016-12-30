@@ -12,6 +12,8 @@ struct Vertex3D{
 	aiVector2D texCoord;
 	Vertex3D(aiVector3D position, aiColor3D color, aiVector2D texCoord,
 			 aiVector3D normal,	aiVector3D bitangente, aiVector3D tangente);
+	Vertex3D(aiVector3D position, aiColor3D color, aiVector2D texCoord,
+			 aiVector3D normal);
 	Vertex3D(aiVector3D position, aiColor3D color);
 	Vertex3D(aiVector3D position,aiVector2D texCoord);
 	Vertex3D(aiVector3D position);

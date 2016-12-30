@@ -15,8 +15,7 @@ Renderer::Renderer()
 	: projectionType(NoProjection),
 	  currentShaders(NoShader),
 	  vbo(QGLBuffer::VertexBuffer),
-	  lock(false),
-	  cameraBound(false)
+	  lock(false)
 {}
 
 void Renderer::initialize()
@@ -49,10 +48,8 @@ void Renderer::resetGlobal()
 	if(!lock){
 		globalTransform = QMatrix4x4();
 		projectionMatrix = QMatrix4x4();
-		viewCam.reset();
 		globalIllumination = QColor::fromRgbF(1,1,1);
-		ambiantLight = QColor::fromRgbF(0.1f,0.1f,0.1f);
-		light = {QVector3D(0,-1,-1), QColor::fromRgbF(1,1,1)};
+		ambiantLight = QColor::fromRgbF(0.3f,0.25f,0.38f);
 	}
 }
 
@@ -118,6 +115,7 @@ void Renderer::initializeVAO()
 	GL->glEnableVertexAttribArray(A_Position);
 	GL->glEnableVertexAttribArray(A_Color);
 	GL->glEnableVertexAttribArray(A_TexturePosition);
+	GL->glEnableVertexAttribArray(A_Normal);
 
 	vbo.bind();
 	GL->glVertexAttribPointer(A_Position, 3, GL_FLOAT, GL_FALSE,
@@ -126,6 +124,8 @@ void Renderer::initializeVAO()
 						  sizeof(Vertex3D),  (GLvoid*) offsetof(Vertex3D, color));
 	GL->glVertexAttribPointer(A_TexturePosition, 2, GL_FLOAT, GL_FALSE,
 						  sizeof(Vertex3D),  (GLvoid*) offsetof(Vertex3D, texCoord));
+	GL->glVertexAttribPointer(A_Normal, 3, GL_FLOAT, GL_FALSE,
+						  sizeof(Vertex3D), (GLvoid*) offsetof(Vertex3D, normal));
 	vbo.release();
 
 	vao.release();
@@ -136,12 +136,7 @@ void Renderer::initRender()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	vao.bind();
-	if(cameraBound){
-		currentMVMatrix = viewCam.getViewMatrix() * globalTransform;
-	}
-	else{
-		currentMVMatrix = globalTransform;
-	}
+	currentMVMatrix = globalTransform;
 	currentMVPMatrix = projectionMatrix * currentMVMatrix;
 	bindShader(Minimal);
 }
@@ -166,17 +161,49 @@ void Renderer::bindShader(Renderer::ShaderType shaderType)
 	}
 }
 
-void Renderer::bindCamera()
+void Renderer::bindDirectionalLight(const DirectionalLight &light)
 {
-	cameraBound = true;
-	currentMVMatrix = viewCam.getViewMatrix() * globalTransform;
+	int location = shaders[currentShaders].uniformLocation("directionalLightDir");
+	if(location>=0)
+		shaders[currentShaders].setUniformValue(location,light.direction);
+	location = shaders[currentShaders].uniformLocation("directionalLightColor");
+	if(location>=0)
+		shaders[currentShaders].setUniformValue(location,light.color);
+}
+
+void Renderer::releaseDirectionalLight()
+{
+	int location = shaders[currentShaders].uniformLocation("directionalLightColor");
+	if(location>=0)
+		shaders[currentShaders].setUniformValue(location,QColor(0,0,0));
+}
+
+void Renderer::bindTorchLight(const TorchLight &light)
+{
+	int location = shaders[currentShaders].uniformLocation("torchlightPower");
+	if(location>=0)
+		shaders[currentShaders].setUniformValue(location,light.power);
+	location = shaders[currentShaders].uniformLocation("torchlightColor");
+	if(location>=0)
+		shaders[currentShaders].setUniformValue(location,light.color);
+}
+
+void Renderer::releaseTorchLight()
+{
+	int location = shaders[currentShaders].uniformLocation("torchlightPower");
+	if(location>=0)
+		shaders[currentShaders].setUniformValue(location,0.f);
+}
+
+void Renderer::bindCamera(const Camera &cam)
+{
+	currentMVMatrix = cam.getViewMatrix() * globalTransform;
 	currentMVPMatrix = projectionMatrix * currentMVMatrix;
 	setCurrentShaderUniformValue();
 }
 
 void Renderer::releaseCamera()
 {
-	cameraBound = false;
 	currentMVMatrix = globalTransform;
 	currentMVPMatrix = projectionMatrix * currentMVMatrix;
 	setCurrentShaderUniformValue();
@@ -229,7 +256,7 @@ void Renderer::advancedDraw(const Object3D *)
 
 void Renderer::normalDraw(const Object3D *o)
 {
-	QMatrix4x4 MV = o->transformM * currentMVMatrix;
+	QMatrix4x4 MV = currentMVMatrix * o->transformM;
 	shaders[currentShaders].setUniformValue("objectMVPMatrix", projectionMatrix * MV);
 	shaders[currentShaders].setUniformValue("objectMVMatrix", MV);
 	shaders[currentShaders].setUniformValue("objectNormalMatrix", MV.inverted().transposed());
@@ -318,6 +345,7 @@ void Renderer::setIndex(Object3D &o)
 }
 
 Object3D Renderer::makeColoredFace(float rotationX, float rotationY, float rotationZ,
+								   float translationX, float translationY, float translationZ,
 								   QColor color, float scale)
 {
 	QList<Vertex3D> vertex = { Vertex3D(-scale,-scale,0,color.redF(),color.greenF(),color.blueF()),
@@ -329,6 +357,7 @@ Object3D Renderer::makeColoredFace(float rotationX, float rotationY, float rotat
 	finalRotationMat.rotate(rotationX,1,0,0);
 	finalRotationMat.rotate(rotationY,0,1,0);
 	finalRotationMat.rotate(rotationZ,0,0,1);
+	finalRotationMat.translate(translationX, translationY, translationZ);
 	QMatrix4x4 normalRotationMat;
 	normalRotationMat = finalRotationMat.inverted().transposed();
 
@@ -344,16 +373,18 @@ Object3D Renderer::makeColoredFace(float rotationX, float rotationY, float rotat
 }
 
 Object3D Renderer::makeTexturedFace(float rotationX, float rotationY, float rotationZ,
-									  float scale, int repeat)
+									  float translationX, float translationY, float translationZ,
+									  float scale, float repeat)
 {
-	float limit = 1./(float)repeat;
-	QList<Vertex3D> vertex = { Vertex3D(-scale,-scale,0,0,0), Vertex3D(-scale,scale,0,0,limit),
-								 Vertex3D(scale,-scale,0,limit,0), Vertex3D(scale,scale,0,limit,limit) };
+	//repeat = 1./repeat;
+	QList<Vertex3D> vertex = { Vertex3D(-scale,-scale,0,0,0), Vertex3D(-scale,scale,0,0,repeat),
+								 Vertex3D(scale,-scale,0,repeat,0), Vertex3D(scale,scale,0,repeat,repeat) };
 	QList<Vertex3D>::iterator i;
 	QMatrix4x4 finalRotationMat;
 	finalRotationMat.rotate(rotationX,1,0,0);
 	finalRotationMat.rotate(rotationY,0,1,0);
 	finalRotationMat.rotate(rotationZ,0,0,1);
+	finalRotationMat.translate(translationX, translationY, translationZ);
 	QMatrix4x4 normalRotationMat;
 	normalRotationMat = finalRotationMat.inverted().transposed();
 
@@ -374,14 +405,6 @@ void Renderer::setCurrentShaderUniformValue()
 	int uniformLocation = shaders[currentShaders].uniformLocation("globalLight");
 	if(uniformLocation>=0)
 		shaders[currentShaders].setUniformValue(uniformLocation, globalIllumination);
-	uniformLocation = shaders[currentShaders].uniformLocation("directionalLightDir");
-	if(uniformLocation>=0){
-		QVector3D lightDir = currentMVMatrix * light.direction;
-		shaders[currentShaders].setUniformValue(uniformLocation, lightDir);
-	}
-	uniformLocation = shaders[currentShaders].uniformLocation("directionalLightColor");
-	if(uniformLocation>=0)
-		shaders[currentShaders].setUniformValue(uniformLocation, light.color);
 
 	uniformLocation = shaders[currentShaders].uniformLocation("ambiantLight");
 	if(uniformLocation>=0)

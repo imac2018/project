@@ -16,7 +16,7 @@ void Game::transitionOutUpdate()
 	light -= transitionInc;
 	if(light<=0){
 		current->clear(*this);
-		delete current;
+		//delete current;
 		current = next;
 		next = NULL;
 		_renderer.resetGlobal();
@@ -73,7 +73,7 @@ QPointF Game::windowToGL(QPointF p)
 Game::Game(QWidget *view, Mode* firstMode)
 	: mainWindow(view), current(firstMode),
 	  next(NULL), state(Loading), loadingState(0),
-	  loadingDonut(NULL)
+	  loadingDonut(NULL), _firstMode(firstMode)
 {
 	rotationMatrix.rotate(2,0,0,1);
 }
@@ -175,6 +175,11 @@ void Game::updateProjection()
 Renderer &Game::renderer()
 {
 	return _renderer;
+}
+
+Mode *Game::firstMode()
+{
+	return _firstMode;
 }
 
 bool Game::eventFilter(QObject * source, QEvent * event)

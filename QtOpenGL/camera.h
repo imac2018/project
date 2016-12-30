@@ -29,12 +29,14 @@ public:
 	float rotationLeft() const;
 	float rotationTop() const;
 
+	void setPosition(const QVector3D &pos);
+
 	inline float x() const { return m_Position.x(); }
 	inline float y() const { return m_Position.y(); }
 	inline float z() const { return m_Position.z(); }
 
-	const QVector3D& position();
-	const QVector3D& frontVector();
+	const QVector3D& position() const;
+	const QVector3D& frontVector() const;
 
 	QMatrix4x4 getViewMatrix() const;
 };

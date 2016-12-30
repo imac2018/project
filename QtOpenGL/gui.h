@@ -2,6 +2,7 @@
 #define GUI_H
 
 #include <QString>
+#include <QPair>
 #include <QRectF>
 #include "object3d.h"
 
@@ -10,15 +11,21 @@ class Game;
 class Renderer;
 class Button;
 class QMouseEvent;
+class GuiElement;
 
 class Gui{
 	Button* hoveredButton;
 	Button* pressedButton;
 	QList<Button*> buttons;
+	QList<GuiElement*> guiElements;
+	QList<QPair<int,GuiElement*>> temporaryElements;
 public:
 	Gui();
 
-	void append(Button* newBtn);
+	void appendBtn(Button* newBtn);
+	void appendElement(GuiElement* elemnt);
+
+	void addObjectsToRenderer(Renderer& r);
 
 	bool handleMouseMove(QMouseEvent* mouseE);
 	bool handleMousePress(QMouseEvent* mouseE);
@@ -26,22 +33,42 @@ public:
 
 	QList<Object3D*> objects() const;
 
+	void render(Game &game) const;
+	void update();
+
+	void clear();
+
 };
 
-class Label : public Object3D{
+class GuiElement  : public Object3D{
+public:
+	bool invisible;
+
+	GuiElement(QList<Vertex3D> vertex, const QColor &globalColor, int drawMode);
+	void draw() const;
+};
+
+class Label : public GuiElement{
 	QString text;
 	QRectF bounds;
 public:
 	Label(Renderer &r, QString title, QRectF bounds);
 };
 
-class Image : public Object3D{
+class Image : public GuiElement{
 	QRectF bounds;
 public:
 	Image(Renderer &r, QRectF bounds, const QString &imagePath);
 };
 
-class Button : public Object3D{
+class DialogFrame : public GuiElement{
+	QString text;
+	QRectF bounds;
+public:
+	DialogFrame(Renderer &r, QString title, QRectF bounds, int fontsize);
+};
+
+class Button : public GuiElement{
 	QString title;
 	QRectF bounds;
 
@@ -51,8 +78,7 @@ class Button : public Object3D{
 
 	bool hover;
 	bool pressed;
-	bool invisible;
-	bool inactiv;
+	//bool inactiv;
 
 	void makeButtonTexture(Renderer &renderer, const QString& title, float ratio);
 
@@ -76,6 +102,30 @@ public:
 	ChangeModeButton(Game& g, Mode* next, Renderer &r, QString title, QRectF bounds);
 protected:
 	virtual void action();
+};
+
+struct Dialog;
+
+class ToggleDialogButton : public Button{
+	Dialog* parent;
+	bool show;
+public:
+	ToggleDialogButton(Dialog* parent, bool show, Renderer &r, QString title, QRectF bounds);
+protected:
+	void action();
+};
+
+struct Dialog{
+	Button* cancel;
+	Button* confirm;
+	DialogFrame* frame;
+
+	Dialog();
+	QRectF confirmBtnBounds() const;
+	void initialize(Renderer &renderer, Button* confirm, QString message);
+	void appendToGui(Gui& gui);
+	void hide();
+	void show();
 };
 
 #endif // GUI_H
