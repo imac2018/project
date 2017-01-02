@@ -34,6 +34,11 @@ public:
 	Object3D(const QColor& color, int drawMode = GL_TRIANGLES);
 	Object3D(const Object3D& other);
 
+	void scale(float t);
+	void scale(float x, float y, float z);
+	void translate(float dx, float dy, float dz);
+	void rotate(float rotationX, float rotationY, float rotationZ);
+
 	void clone(Object3D& other) const;
 	void copy(const Object3D& other);
 

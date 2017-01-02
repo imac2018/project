@@ -39,6 +39,10 @@ public:
 	const QVector3D& frontVector() const;
 
 	QMatrix4x4 getViewMatrix() const;
+
+	static inline QVector3D computeFrontVector(float angleY){
+		return QVector3D(sinf(angleY),0,cosf(angleY));
+	}
 };
 
 #endif //FREEFLY_CAMERA_H

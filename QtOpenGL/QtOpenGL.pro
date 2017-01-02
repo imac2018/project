@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui opengl multimedia
+QT       += core gui opengl multimedia xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,8 +26,11 @@ SOURCES += main.cpp\
 		tools.cpp \
 		level.cpp \
 		gui.cpp \
-    player.cpp \
-    audio.cpp
+		player.cpp \
+		audio.cpp \
+		mapelement.cpp \
+		enemy.cpp \
+		item.cpp
 
 HEADERS  += mainwindow.h \
 		glwidget.h \
@@ -43,11 +46,15 @@ HEADERS  += mainwindow.h \
 		vertex.h \
 		level.h \
 		gui.h \
-    player.h \
-    audio.h
+		player.h \
+		audio.h \
+		mapelement.h \
+		enemy.h \
+		item.h
 
 RESOURCES += \
-	ressource.qrc
+	ressource.qrc \
+    assets_images.qrc
 
 #unix|win32: LIBS += -L$$PWD/third-party/assimp/lib/ libassimp.dll.a
 unix|win32: LIBS += -L$$PWD/third-party/assimp/lib/VC32 -lassimp

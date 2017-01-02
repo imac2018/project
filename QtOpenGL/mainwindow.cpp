@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	settings("PineappleSquad",
 			 qAppName(),this)
 {
-	this->setWindowTitle("What Such A Saucisse Party");
+	this->setWindowTitle("KIWK-I-MAC");
 	QGLFormat glFormat;
 	glFormat.setProfile( QGLFormat::CoreProfile ); // Requires >=Qt-4.8.0
 	glFormat.setSampleBuffers( true );

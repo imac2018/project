@@ -21,6 +21,8 @@ class Player
 	QVector3D translateTarget;
 	Case* caseTarget;
 
+	int _life;
+
 	float upSpeed;
 	float initialY;
 
@@ -38,8 +40,9 @@ public:
 	void update(Game &);
 
 	void moveForward(Case* target);
-	void moveBack(Case* target);
-	void setPosition(QPoint mapPos, QVector3D realPos, Orientation dir = NORTH);
+	void moveBack(Case *target);
+	void setPosition(QPoint mapPos, QVector3D realPos,
+					 Orientation dir = NORTH);
 
 	void rotateLeft();
 	void rotateRight();
@@ -49,7 +52,12 @@ public:
 	QPoint mapPosition() const;
 	QVector3D realPosition() const;
 	int duffCount() const;
+	int life() const;
 	const Camera& camera() const;
+
+	void receiveDamage();
+
+	void clear();
 
 	Orientation direction() const;
 };

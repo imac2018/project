@@ -6,6 +6,7 @@
 #include "game.h"
 #include "mode.h"
 #include "gui.h"
+#include "audio.h"
 #include "tools.h"
 
 #define transitionInc 0.05f
@@ -76,6 +77,8 @@ Game::Game(QWidget *view, Mode* firstMode)
 	  loadingDonut(NULL), _firstMode(firstMode)
 {
 	rotationMatrix.rotate(2,0,0,1);
+	AudioManager::initAudioLibrary();
+
 }
 
 void Game::initializeRender()
@@ -89,7 +92,7 @@ void Game::initializeRender()
 	_renderer.initialize();
 	loadingRenderer.initialize();
 	loadingDonut = new Image(loadingRenderer, QRectF(-0.25,-0.25,0.5,0.5),
-							  ":/assets/loading.png");
+							  ":/assets/images/loading.png");
 	loadingRenderer.addObject(*loadingDonut);
 	loadingRenderer.initializeVBO();
 	loadingRenderer.initializeVAO();

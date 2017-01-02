@@ -24,6 +24,7 @@ public:
 
 	void appendBtn(Button* newBtn);
 	void appendElement(GuiElement* elemnt);
+	void appendTmpElement(int delay, GuiElement* elemnt);
 
 	void addObjectsToRenderer(Renderer& r);
 
@@ -52,7 +53,8 @@ class Label : public GuiElement{
 	QString text;
 	QRectF bounds;
 public:
-	Label(Renderer &r, QString title, QRectF bounds);
+	Label(Renderer &r, QString title, QRectF bounds, int fontsize,
+		  QColor color=Qt::black, QColor border=Qt::white);
 };
 
 class Image : public GuiElement{
@@ -80,10 +82,14 @@ class Button : public GuiElement{
 	bool pressed;
 	//bool inactiv;
 
-	void makeButtonTexture(Renderer &renderer, const QString& title, float ratio);
+	void makeButtonTexture(Renderer &renderer, const QString& title,
+						   float ratio, bool bold, int fontsize);
+	void makeButtonTexture(Renderer &renderer, const QString& btnImagePath,
+						   float ratio);
 
 public:
-	Button(Renderer &r, QString title, QRectF bounds);
+	Button(Renderer &r, QString title, QRectF bounds, bool textonly, int fontSize);
+	Button(Renderer &r, QString btnImagePath, QRectF bounds);
 	bool containsPoint(QPointF point);
 	void pressedEvent();
 	void releaseEvent(bool action);
@@ -99,7 +105,18 @@ class ChangeModeButton : public Button{
 	Mode* next;
 	Game& game;
 public:
-	ChangeModeButton(Game& g, Mode* next, Renderer &r, QString title, QRectF bounds);
+	ChangeModeButton(Game& g, Mode* next, Renderer &r, QString title, QRectF bounds,
+					 bool textonly, int fontSize);
+	ChangeModeButton(Game& g, Mode* next,Renderer &r, QString btnImagePath, QRectF bounds);
+protected:
+	virtual void action();
+};
+
+class ExitButton : public Button{
+public:
+	ExitButton(Renderer &r, QString title, QRectF bounds,
+					 bool textonly, int fontSize);
+	ExitButton(Renderer &r, QString btnImagePath, QRectF bounds);
 protected:
 	virtual void action();
 };
@@ -110,7 +127,9 @@ class ToggleDialogButton : public Button{
 	Dialog* parent;
 	bool show;
 public:
-	ToggleDialogButton(Dialog* parent, bool show, Renderer &r, QString title, QRectF bounds);
+	ToggleDialogButton(Dialog* parent, bool show, Renderer &r, QString title, QRectF bounds,
+					 bool textonly, int fontSize);
+	ToggleDialogButton(Dialog* parent, bool show, Renderer &r, QString btnImagePath, QRectF bounds);
 protected:
 	void action();
 };
@@ -119,6 +138,7 @@ struct Dialog{
 	Button* cancel;
 	Button* confirm;
 	DialogFrame* frame;
+	static int defaultBtnFontSize;
 
 	Dialog();
 	QRectF confirmBtnBounds() const;
@@ -126,6 +146,8 @@ struct Dialog{
 	void appendToGui(Gui& gui);
 	void hide();
 	void show();
+	void showOkDialog();
+	bool isVisible() const;
 };
 
 #endif // GUI_H

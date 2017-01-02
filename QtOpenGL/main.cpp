@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 	try{
 		w = new MainWindow();
 		w->show();
+		return a.exec();
 	}
 	catch(GLException e){
 		QMessageBox::critical(w,e.title,e.text,QMessageBox::Ok);
@@ -22,6 +23,6 @@ int main(int argc, char *argv[])
 			w->close();
 		a.quit();
 	}
+	return 1;
 
-	return a.exec();
 }

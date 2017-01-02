@@ -1,9 +1,11 @@
 #include "player.h"
 #include "tools.h"
+#include "audio.h"
 
 Player::Player(Level &parent, Map *map)
-	: _direction(NORTH), initialY(3.f), map(map),
-	  caseTarget(NULL), _duffCount(0), parent(parent)
+	: _direction(NORTH), initialY(5.f), map(map),
+	  caseTarget(NULL), _duffCount(0), parent(parent),
+	  _life(5)
 {}
 
 void Player::setMap(Map *map)
@@ -68,25 +70,25 @@ void Player::update(Game &)
 	if(!isZero(translateSpeed)){
 		switch(direction){
 		case NORTH:
-			if(view.z() + (translateSpeed * view.frontVector()).z() < translateTarget.z()){
+			if(view.z() + translateSpeed * view.frontVector().z() < translateTarget.z()){
 				view.moveFront((translateTarget.z() - view.z())/view.frontVector().z());
 				translateSpeed = 0;
 			}
 			break;
 		case EAST:
-			if(view.x() + (translateSpeed * view.frontVector()).x() > translateTarget.x()){
+			if(view.x() + translateSpeed * view.frontVector().x() > translateTarget.x()){
 				view.moveFront((translateTarget.x() - view.x())/view.frontVector().x());
 				translateSpeed = 0;
 			}
 			break;
 		case SOUTH:
-			if(view.z() + (translateSpeed * view.frontVector()).z() > translateTarget.z()){
+			if(view.z() + translateSpeed * view.frontVector().z() > translateTarget.z()){
 				view.moveFront((translateTarget.z() - view.z())/view.frontVector().z());
 				translateSpeed = 0;
 			}
 			break;
 		case WEST:
-			if(view.x() + (translateSpeed * view.frontVector()).x() < translateTarget.x()){
+			if(view.x() + translateSpeed * view.frontVector().x() < translateTarget.x()){
 				view.moveFront((translateTarget.x() - view.x())/view.frontVector().x());
 				translateSpeed = 0;
 			}
@@ -120,7 +122,7 @@ void Player::update(Game &)
 	}
 }
 
-void Player::moveForward(Case *target)
+void Player::moveForward(Case* target)
 {
 	mapPos += Map::getMoveFromOrientation(_direction);
 	caseTarget = target;
@@ -145,8 +147,8 @@ void Player::setPosition(QPoint mapPos, QVector3D realPos, Orientation dir)
 	translateSpeed = 0;
 	upSpeed = 0;
 
-	_direction = NORTH;
-	view.rotateLeft(HALFPI_f * (dir-_direction));
+	view.rotateLeft(HALFPI_f * (dir-NORTH));
+	_direction = dir;
 	rotationTarget = view.rotationLeft();
 
 	translateTarget = QVector3D(realPos.x(),initialY, realPos.z());
@@ -156,7 +158,7 @@ void Player::setPosition(QPoint mapPos, QVector3D realPos, Orientation dir)
 
 void Player::rotateLeft()
 {
-	rotationTarget = view.rotationLeft() + HALFPI_f;
+	rotationTarget += HALFPI_f;
 	if(_direction==NORTH)
 		_direction = WEST;
 	else
@@ -166,7 +168,7 @@ void Player::rotateLeft()
 
 void Player::rotateRight()
 {
-	rotationTarget = view.rotationLeft() - HALFPI_f;
+	rotationTarget -= HALFPI_f;
 	_direction = (Orientation)((_direction+1)%OrientationCount);
 	rotationSpeed = -0.2f;
 }
@@ -190,10 +192,31 @@ int Player::duffCount() const
 {
 	return _duffCount;
 }
+int Player::life() const
+{
+	return _life;
+}
+
 
 const Camera &Player::camera() const
 {
 	return view;
+}
+
+void Player::receiveDamage()
+{
+	AudioPlayer* player = AudioManager::player("cri.mp3");
+	if(player){
+		player->setVolume(30);
+		player->play();
+	}
+	_life--;
+}
+
+void Player::clear()
+{
+	_life = 5;
+	_duffCount = 0;
 }
 
 Orientation Player::direction() const

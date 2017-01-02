@@ -6,19 +6,19 @@
         <file>shaders/minimal_fragment.fs.glsl</file>
         <file>shaders/fragment.fs.glsl</file>
         <file>shaders/vertex.vs.glsl</file>
-        <file>assets/button.png</file>
-        <file>assets/button_hover.png</file>
-        <file>assets/button_pressed.png</file>
-        <file>assets/loading.png</file>
-        <file>assets/sol_2.png</file>
-        <file>assets/sol_3.png</file>
-        <file>assets/sol_4.png</file>
-        <file>assets/sol_default.png</file>
         <file>level/map1.ppm</file>
-        <file>assets/plafond_2.png</file>
-        <file>assets/plafond_default.png</file>
         <file>models/box.obj</file>
         <file>models/concave_polygon.obj</file>
         <file>models/graou.obj</file>
+        <file>models/duff.3ds</file>
+        <file>models/duff.t3d</file>
+        <file>level/level1.xml</file>
+        <file>models/contour.obj</file>
+        <file>models/porte.obj</file>
+        <file>models/cardboardbox.obj</file>
+        <file>models/stairs.3DS</file>
+        <file>models/stairs2.3DS</file>
+        <file>models/stairs3.3DS</file>
+        <file>models/stairs4.3DS</file>
     </qresource>
 </RCC>

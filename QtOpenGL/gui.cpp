@@ -1,4 +1,5 @@
 #include <QMouseEvent>
+#include <QApplication>
 
 #include "gui.h"
 #include "game.h"
@@ -14,55 +15,101 @@ QPixmap makeGrayPicture(const QPixmap& pix){
 }
 
 void drawText(QPainter& painter, const QString& imagePath,
-			  const QString& label, int width, int height, int fontsize){
+			  const QString& label, int width, int height, int fontsize,
+			  QColor c = Qt::black, QRect textBound = QRect()){
 	QFont font = QFont("Arial");
 	font.setPointSize(fontsize);
 	painter.drawImage(0,0,QImage(imagePath).scaled(width,
 													height,
 													Qt::IgnoreAspectRatio));
-	painter.setPen(QColor(40,20,13));
+	painter.setPen(c);
 	painter.setFont(font);
-	painter.drawText( QRectF(width*0.1,height*0.1,width*0.8,height*0.8),
-					  Qt::AlignCenter | Qt::TextWordWrap, label );
+	if(textBound.isNull()){
+		textBound = QRect(width*0.1,height*0.1,width*0.8,height*0.8);
+	}
+	painter.drawText( textBound,  Qt::AlignCenter | Qt::TextWordWrap, label );
 }
 
-void drawText(QPainter& painter,  const QString& imagePath,
-			  const QString& label, int width, int height){
-	drawText(painter,imagePath, label,width,height,(width*0.7)/label.count());
-}
-
-void drawText(QPainter& painter, const QString& label, int width, int height, int fontsize){
+void drawText(QPainter& painter, const QString& label, int width,
+			  int height, int fontsize, QColor c = Qt::black, bool bold=false){
 	QFont font = QFont("Arial");
 	font.setPointSize(fontsize);
-	painter.setPen(QColor(40,20,13));
+	font.setBold(bold);
+	painter.setPen(c);
 	painter.setFont(font);
-
 	painter.drawText( QRectF(width*0.1,height*0.1,width*0.8,height*0.8),
 					  Qt::AlignCenter | Qt::TextWordWrap, label );
 }
 
-void drawText(QPainter& painter, const QString& label, int width, int height){
-	drawText(painter,label,width,height,(width*0.7)/label.count());
+void drawTextWithBorder(QPainter& painter, const QString& label, int width,
+						int height, int fontsize, QColor c = Qt::black, int borderWidth = 2,
+						QColor borderC = Qt::white,bool bold=false){
+	QFont font = QFont("Arial");
+
+	font.setPointSize(fontsize + 1);
+	painter.setFont(font);
+	font.setBold(bold);
+	painter.setPen(borderC);
+	painter.drawText( QRectF(width*0.1, height*0.1,width*0.8,height*0.8),
+					  Qt::AlignCenter | Qt::TextWordWrap, label );
+
+	font.setPointSize(fontsize);
+	painter.setFont(font);
+	painter.setPen(c);
+	painter.drawText( QRectF(width*0.1,height*0.1,width*0.8,height*0.8),
+										Qt::AlignCenter | Qt::TextWordWrap, label );
 }
 
-void Button::makeButtonTexture(Renderer &renderer, const QString& title, float ratio)
+void Button::makeButtonTexture(Renderer &renderer, const QString& title,
+							   float ratio, bool textonly, int fontsize)
 {
 	QPixmap text(720,720*ratio);
 	text.fill(Qt::transparent);
 	QPainter painter(&text);
-	QFontMetrics fm(painter.font());
-	int size = painter.font().pointSizeF() * qMin<float>(text.width() / fm.width(title),
-													   text.height() / fm.height()) * 0.7;
-	drawText(painter, ":/assets/button.png",title, text.width(), text.height(), size);
+	if(textonly){
+		drawText(painter,title,text.width(),text.height(),fontsize,QColor("#ffdb01"));
+		texture = renderer.addTexture(text);
+		textureInactiv = renderer.addTexture(makeGrayPicture(text));
+		drawText(painter,title,text.width(),text.height(),fontsize+2,QColor("#ffe050"),true);
+		textureHover = renderer.addTexture(text);
+		drawText(painter,title,text.width(),text.height(),fontsize-1,QColor("#ffd000"),false);
+		texturePressed = renderer.addTexture(text);
+	}
+	else{
+		drawText(painter, ":/assets/images/button.png",title,
+				 text.width(), text.height(),fontsize, QColor(30,21,2));
+		texture = renderer.addTexture(text);
+		textureInactiv = renderer.addTexture(makeGrayPicture(text));
+		drawText(painter, ":/assets/images/button_hover.png",title, text.width(),
+				 text.height(),fontsize, QColor(30,21,2));
+		textureHover = renderer.addTexture(text);
+		drawText(painter, ":/assets/images/button_pressed.png",title, text.width(),
+				 text.height(),fontsize, QColor(30,21,2));
+		texturePressed = renderer.addTexture(text);
+	}
+
+}
+
+void Button::makeButtonTexture(Renderer &renderer,
+							   const QString &btnImagePath, float ratio)
+{
+	QPixmap text(720,720*ratio);
+	text.fill(Qt::transparent);
+	QPainter painter(&text);
+	painter.drawImage(QRect(0,0,text.width(),text.height()),QImage(btnImagePath));
 	texture = renderer.addTexture(text);
 	textureInactiv = renderer.addTexture(makeGrayPicture(text));
-	drawText(painter, ":/assets/button_hover.png",title, text.width(), text.height(), size);
+	QString hoveredImage = btnImagePath;
+	hoveredImage.replace(QRegExp("\\.(\\w+)"),"_hover.\\1");
+	painter.drawImage(QRect(0,0,text.width(),text.height()),QImage(hoveredImage));
 	textureHover = renderer.addTexture(text);
-	drawText(painter, ":/assets/button_pressed.png",title, text.width(), text.height(), size);
+	hoveredImage.replace(QRegExp("_hover\\.(\\w+)"),"_pressed.\\1");
+	painter.drawImage(QRect(0,0,text.width(),text.height()),QImage(hoveredImage));
 	texturePressed = renderer.addTexture(text);
 }
 
-Button::Button(Renderer& r, QString title, QRectF bounds)
+Button::Button(Renderer& r, QString title, QRectF bounds,
+					bool textonly, int fontSize)
 	: GuiElement({Vertex3D(bounds.left(),bounds.top(),0,0,0),
 				 Vertex3D(bounds.left(),bounds.bottom(),0,0,1),
 				 Vertex3D(bounds.right(),bounds.top(),0,1,0),
@@ -70,7 +117,18 @@ Button::Button(Renderer& r, QString title, QRectF bounds)
 				 Qt::white, GL_TRIANGLE_STRIP), title(title),
 		pressed(false), hover(false), bounds(bounds)
 {
-	makeButtonTexture(r,title, bounds.height() / bounds.width());
+	makeButtonTexture(r,title, bounds.height() / bounds.width(),textonly, fontSize);
+}
+
+Button::Button(Renderer &r, QString btnImagePath, QRectF bounds)
+	: GuiElement({Vertex3D(bounds.left(),bounds.top(),0,0,0),
+				 Vertex3D(bounds.left(),bounds.bottom(),0,0,1),
+				 Vertex3D(bounds.right(),bounds.top(),0,1,0),
+				 Vertex3D(bounds.right(),bounds.bottom(),0,1,1)},
+				 Qt::white, GL_TRIANGLE_STRIP),
+		pressed(false), hover(false), bounds(bounds)
+{
+	makeButtonTexture(r,btnImagePath, bounds.height() / bounds.width());
 }
 
 bool Button::containsPoint(QPointF point)
@@ -130,7 +188,9 @@ void Button::draw() const
 void Button::action()
 {}
 
-Label::Label(Renderer &r, QString title, QRectF bounds)
+Label::Label(Renderer &r, QString title,
+					QRectF bounds, int fontsize, QColor color,
+					QColor border)
 	: GuiElement({Vertex3D(bounds.left(),bounds.top(),0,0,0),
 				 Vertex3D(bounds.left(),bounds.bottom(),0,0,1),
 				 Vertex3D(bounds.right(),bounds.top(),0,1,0),
@@ -141,13 +201,19 @@ Label::Label(Renderer &r, QString title, QRectF bounds)
 	QPixmap text(720,720*bounds.height() / bounds.width());
 	text.fill(Qt::transparent);
 	QPainter painter(&text);
-	drawText(painter,title, text.width(), text.height());
+	drawTextWithBorder(painter,title, text.width(), text.height(),fontsize,
+							color, 3, border);
 	texture = r.addTexture(text);
 }
 
+ChangeModeButton::ChangeModeButton(Game& g, Mode* next, Renderer &r, QString title, QRectF bounds,
+								   bool textonly, int fontSize)
+	: Button(r,title,bounds,textonly,fontSize), next(next), game(g)
+{}
+
 ChangeModeButton::ChangeModeButton(Game &g, Mode *next, Renderer &r,
-								   QString title, QRectF bounds)
-	: Button(r,title,bounds), next(next), game(g)
+								   QString btnImagePath, QRectF bounds)
+: Button(r,btnImagePath,bounds), next(next), game(g)
 {}
 
 void ChangeModeButton::action(){
@@ -163,6 +229,7 @@ Gui::Gui()
 void Gui::appendBtn(Button *newBtn)
 {
 	buttons.append(newBtn);
+	appendElement(newBtn);
 }
 
 void Gui::appendElement(GuiElement *elemnt)
@@ -170,11 +237,13 @@ void Gui::appendElement(GuiElement *elemnt)
 	guiElements.append(elemnt);
 }
 
+void Gui::appendTmpElement(int delay, GuiElement *element)
+{
+	temporaryElements.append(QPair<int,GuiElement*>(delay,element));
+}
+
 void Gui::addObjectsToRenderer(Renderer &r)
 {
-	foreach(Button* o, buttons){
-		r.addObject(*o);
-	}
 	foreach(GuiElement* o, guiElements){
 		r.addObject(*o);
 	}
@@ -254,7 +323,15 @@ void Gui::render(Game & game) const
 	game.updateProjection();
 	renderer.releaseCamera();
 	renderer.bindShader(Renderer::Minimal);
-	renderer.draw(objects());
+	QList<Object3D *> objects;
+	foreach(GuiElement* e, guiElements){
+		objects.append(e);
+	}
+	QPair<int,GuiElement*> te;
+	foreach(te, temporaryElements){
+		objects.append(te.second);
+	}
+	renderer.draw(objects);
 }
 
 void Gui::update()
@@ -281,10 +358,6 @@ void Gui::clear()
 		delete (*j);
 	}
 	guiElements.clear();
-	QList<Button*>::Iterator k;
-	for(k=buttons.begin();k!=buttons.end();k++){
-		delete (*k);
-	}
 	buttons.clear();
 	hoveredButton = NULL;
 	pressedButton = NULL;
@@ -312,24 +385,32 @@ void GuiElement::draw() const
 }
 
 DialogFrame::DialogFrame(Renderer &r, QString title, QRectF bounds, int fontsize)
-	: GuiElement({Vertex3D(bounds.left(),bounds.top(),0,0,0),
-			   Vertex3D(bounds.left(),bounds.bottom(),0,0,1),
-			   Vertex3D(bounds.right(),bounds.top(),0,1,0),
-			   Vertex3D(bounds.right(),bounds.bottom(),0,1,1)},
+	: GuiElement({Vertex3D(-1,-1,0,0,0),
+			   Vertex3D(-1,1,0,0,1),
+			   Vertex3D(1,-1,0,1,0),
+			   Vertex3D(1,1,0,1,1)},
 			   Qt::white, GL_TRIANGLE_STRIP),
 	  bounds(bounds)
 {
 	QPixmap text(720,720*bounds.height() / bounds.width());
 	text.fill(Qt::transparent);
 	QPainter painter(&text);
-	drawText(painter, ":/assets/button.png",title, text.width(), text.height(), fontsize);
+	drawText(painter, ":/assets/images/fenetre.png",title, text.width(),
+			 text.height(), fontsize, QColor("#ffdb01"), QRect(120,0,440,text.height()));
 	texture = r.addTexture(text);
 }
 
-ToggleDialogButton::ToggleDialogButton(Dialog *parent, bool show, Renderer &r,
-									   QString title, QRectF bounds)
-	: Button(r,title,bounds), parent(parent), show(show)
+ToggleDialogButton::ToggleDialogButton(Dialog* parent, bool show, Renderer &r,
+									   QString title, QRectF bounds, bool textonly, int fontSize)
+	: Button(r,title,bounds,textonly,fontSize), parent(parent), show(show)
 {}
+
+ToggleDialogButton::ToggleDialogButton(Dialog *parent, bool show, Renderer &r,
+									   QString btnImagePath, QRectF bounds)
+	: Button(r,btnImagePath,bounds), parent(parent), show(show)
+{
+
+}
 
 void ToggleDialogButton::action()
 {
@@ -352,15 +433,15 @@ void Dialog::initialize(Renderer& renderer, Button *confirm, QString message)
 {
 	this->confirm = confirm;
 	cancel = new ToggleDialogButton(this, false, renderer,"Cancel",
-									QRectF(-0.1f,0.3f,0.2f,0.1f));
-	frame = new DialogFrame(renderer,message, QRectF(-0.5,-0.5,1,1),50);
+									QRectF(-0.1f,0.3f,0.2f,0.1f), true, defaultBtnFontSize);
+	frame = new DialogFrame(renderer,message, QRectF(-0.5,-0.5,1,1),25);
 }
 
 void Dialog::appendToGui(Gui &gui)
 {
+	gui.appendElement(frame);
 	gui.appendBtn(confirm);
 	gui.appendBtn(cancel);
-	gui.appendElement(frame);
 }
 
 
@@ -376,4 +457,36 @@ void Dialog::show()
 	cancel->invisible = false;
 	confirm->invisible = false;
 	frame->invisible = false;
+}
+
+void Dialog::showOkDialog()
+{
+	cancel->invisible = true;
+	confirm->invisible = false;
+	frame->invisible = false;
+}
+
+bool Dialog::isVisible() const
+{
+	if(frame==NULL)
+		return false;
+	return !frame->invisible;
+}
+
+int Dialog::defaultBtnFontSize = 120;
+
+ExitButton::ExitButton(Renderer &r, QString title, QRectF bounds, bool textonly, int fontSize)
+	: Button(r,title,bounds,textonly,fontSize)
+{
+
+}
+
+ExitButton::ExitButton(Renderer &r, QString btnImagePath, QRectF bounds)
+	: Button(r,btnImagePath,bounds)
+{
+}
+
+void ExitButton::action()
+{
+	QApplication::instance()->exit(0);
 }

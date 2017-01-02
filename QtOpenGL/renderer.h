@@ -136,7 +136,7 @@ public:
 							 QColor color, float scale=1);
 	Object3D makeTexturedFace(float rotationX, float rotationY, float rotationZ,
 							  float translationX, float translationY, float translationZ,
-							  float scale=1, float repeat=1);
+							  float scaleX=1, float scaleY=0, float repeat=1);
 
 };
 

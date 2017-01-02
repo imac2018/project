@@ -18,7 +18,7 @@ Object3D::Object3D(QList<Vertex3D> vertex, const QColor &globalColor, int drawMo
 }
 
 Object3D::Object3D(QList<Vertex3D> vertex, int drawMode)
-	: Object3D(vertex,QColor(255,255,255))
+	: Object3D(vertex,QColor(255,255,255),drawMode)
 {}
 
 Object3D::Object3D(const QColor &globalColor, int drawMode)
@@ -38,6 +38,67 @@ Object3D::Object3D(const Object3D &other)
 	  normalTexture(other.normalTexture),
 	  drawMode(other.drawMode)
 {}
+
+void Object3D::scale(float t)
+{
+	QList<Vertex3D>::iterator i;
+	QMatrix4x4 finalScaleMat;
+	finalScaleMat.scale(t);
+	QMatrix4x4 normalMat;
+	normalMat = finalScaleMat.inverted().transposed();
+
+
+	for(i=vertex.begin();i!=vertex.end();i++){
+		(*i).normal = toAiVector(normalMat * toQVector((*i).normal));
+		(*i).position = toAiVector(finalScaleMat * toQVector((*i).position));
+	}
+}
+void Object3D::scale(float x, float y, float z)
+{
+	QList<Vertex3D>::iterator i;
+	QMatrix4x4 finalScaleMat;
+	finalScaleMat.scale(x,y,z);
+	QMatrix4x4 normalMat;
+	normalMat = finalScaleMat.inverted().transposed();
+
+
+	for(i=vertex.begin();i!=vertex.end();i++){
+		(*i).normal = toAiVector(normalMat * toQVector((*i).normal));
+		(*i).position = toAiVector(finalScaleMat * toQVector((*i).position));
+	}
+}
+
+void Object3D::translate(float dx, float dy, float dz)
+{
+	QList<Vertex3D>::iterator i;
+	QMatrix4x4 finalRotationMat;
+	finalRotationMat.translate(dx,dy,dz);
+	QMatrix4x4 normalMat;
+	normalMat = finalRotationMat.inverted().transposed();
+
+
+	for(i=vertex.begin();i!=vertex.end();i++){
+		(*i).normal = toAiVector(normalMat * toQVector((*i).normal));
+		(*i).position = toAiVector(finalRotationMat * toQVector((*i).position));
+	}
+}
+
+void Object3D::rotate(float rotationX, float rotationY, float rotationZ)
+{
+	QList<Vertex3D>::iterator i;
+	QMatrix4x4 finalRotationMat;
+	finalRotationMat.rotate(rotationX,1,0,0);
+	finalRotationMat.rotate(rotationY,0,1,0);
+	finalRotationMat.rotate(rotationZ,0,0,1);
+	QMatrix4x4 normalMat;
+	normalMat = finalRotationMat.inverted().transposed();
+
+
+	for(i=vertex.begin();i!=vertex.end();i++){
+		(*i).normal = toAiVector(normalMat * toQVector((*i).normal));
+		(*i).position = toAiVector(finalRotationMat * toQVector((*i).position));
+	}
+}
 
 void Object3D::clone(Object3D &other) const
 {
@@ -117,7 +178,10 @@ QList<Object3D *> Object3D::importFromFile(QString filepath)
 	Assimp::Importer importer;
 	QFile file(filepath);
 	file.open(QIODevice::ReadOnly);
-
+	if(!file.isOpen())
+		throw GLException("3D Import Error",
+						  "Cannot read file : " + filepath + "\n" +
+						  file.errorString());
 	char* data = new char[file.size()];
 	file.read(data,file.size());
 
@@ -137,7 +201,7 @@ QList<Object3D *> Object3D::importFromFile(QString filepath)
 	QList<Object3D*> _return;
 	for(unsigned i=0;i<scene->mNumMeshes;i++){
 		aiMesh* mesh = scene->mMeshes[i];
-		aiMaterial* m = scene->mMaterials[mesh->mMaterialIndex];
+		//aiMaterial* m = scene->mMaterials[mesh->mMaterialIndex];
 		if(mesh->mTextureCoords[0]==NULL)
 			if(mesh->mColors[0]==NULL)
 				_return.append(new Object3D(vertexFromBlankMesh(mesh)));

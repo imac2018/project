@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/images/cardboardbox.jpg</file>
+        <file>assets/images/comptoir.png</file>
+        <file>assets/images/duff.png</file>
+        <file>assets/images/duff3D.jpg</file>
+        <file>assets/images/duff3D2.jpg</file>
+        <file>assets/images/exit.png</file>
+        <file>assets/images/exit_hover.png</file>
+        <file>assets/images/fenetre.png</file>
+        <file>assets/images/loading.png</file>
+        <file>assets/images/magasin.png</file>
+        <file>assets/images/mursimple.png</file>
+        <file>assets/images/ned.png</file>
+        <file>assets/images/plafond_2.png</file>
+        <file>assets/images/plafond_default.png</file>
+        <file>assets/images/rayon_1.png</file>
+        <file>assets/images/sol_2.png</file>
+        <file>assets/images/sol_3.png</file>
+        <file>assets/images/sol_4.png</file>
+        <file>assets/images/sol_default.png</file>
+        <file>assets/images/start.png</file>
+        <file>assets/images/start_hover.png</file>
+        <file>assets/images/exit_pressed.png</file>
+        <file>assets/images/murporte.png</file>
+        <file>assets/images/rayon_2.png</file>
+        <file>assets/images/rayon_3.png</file>
+        <file>assets/images/rayon_4.png</file>
+    </qresource>
+</RCC>

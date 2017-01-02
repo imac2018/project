@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/sounds/apu.mp3</file>
+        <file>assets/sounds/cri.mp3</file>
+        <file>assets/sounds/generique.mp3</file>
+        <file>assets/sounds/salutsalut.mp3</file>
+        <file>assets/sounds/toh.mp3</file>
+    </qresource>
+</RCC>

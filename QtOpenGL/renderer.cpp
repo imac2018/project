@@ -48,8 +48,8 @@ void Renderer::resetGlobal()
 	if(!lock){
 		globalTransform = QMatrix4x4();
 		projectionMatrix = QMatrix4x4();
-		globalIllumination = QColor::fromRgbF(1,1,1);
-		ambiantLight = QColor::fromRgbF(0.3f,0.25f,0.38f);
+		globalIllumination = QColor(255,255,255,100);
+		ambiantLight = QColor::fromRgbF(0.15f,0.12f,0.16f);
 	}
 }
 
@@ -363,7 +363,7 @@ Object3D Renderer::makeColoredFace(float rotationX, float rotationY, float rotat
 
 
 	for(i=vertex.begin();i!=vertex.end();i++){
-		(*i).normal = toAiVector(normalRotationMat * QVector3D(0,0,1));
+		(*i).normal = toAiVector(normalRotationMat * QVector4D(0,0,1,0));
 		(*i).position = toAiVector(toQVector((*i).position) * finalRotationMat);
 	}
 
@@ -374,24 +374,32 @@ Object3D Renderer::makeColoredFace(float rotationX, float rotationY, float rotat
 
 Object3D Renderer::makeTexturedFace(float rotationX, float rotationY, float rotationZ,
 									  float translationX, float translationY, float translationZ,
-									  float scale, float repeat)
+									  float scaleX, float scaleY, float repeat)
 {
 	//repeat = 1./repeat;
-	QList<Vertex3D> vertex = { Vertex3D(-scale,-scale,0,0,0), Vertex3D(-scale,scale,0,0,repeat),
-								 Vertex3D(scale,-scale,0,repeat,0), Vertex3D(scale,scale,0,repeat,repeat) };
+	if(isZero(scaleY))
+		scaleY = scaleX;
+	QList<Vertex3D> vertex = { Vertex3D(-scaleX,-scaleY,0,repeat,repeat), Vertex3D(-scaleX,scaleY,0,repeat,0),
+								 Vertex3D(scaleX,-scaleY,0,0,repeat), Vertex3D(scaleX,scaleY,0,0,0) };
 	QList<Vertex3D>::iterator i;
 	QMatrix4x4 finalRotationMat;
 	finalRotationMat.rotate(rotationX,1,0,0);
 	finalRotationMat.rotate(rotationY,0,1,0);
 	finalRotationMat.rotate(rotationZ,0,0,1);
-	finalRotationMat.translate(translationX, translationY, translationZ);
-	QMatrix4x4 normalRotationMat;
-	normalRotationMat = finalRotationMat.inverted().transposed();
+	QMatrix4x4 normalMat;
+	normalMat = finalRotationMat.inverted().transposed();
 
 
 	for(i=vertex.begin();i!=vertex.end();i++){
-		(*i).normal = toAiVector(normalRotationMat * QVector3D(0,0,1));
-		(*i).position = toAiVector(toQVector((*i).position) * finalRotationMat);
+		(*i).normal = toAiVector(normalMat * QVector4D(0,0,1,0));
+		(*i).position = toAiVector(finalRotationMat * toQVector((*i).position));
+	}
+
+	QMatrix4x4 finalTranslateMat;
+	finalTranslateMat.translate(translationX,translationY,translationZ);
+
+	for(i=vertex.begin();i!=vertex.end();i++){
+		(*i).position = toAiVector(finalTranslateMat * toQVector((*i).position));
 	}
 
 

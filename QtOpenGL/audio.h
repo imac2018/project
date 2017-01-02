@@ -2,28 +2,29 @@
 #define AUDIO_H
 
 #include <QAudio>
-#include <QAudioOutput>
 #include <QFile>
 #include <QMap>
+#include <QMediaPlayer>
 
 class AudioManager;
 class AudioPlayer : QObject{
 
 	Q_OBJECT
 
-	QAudioOutput* audio;
-	QFile file;
 	QString key;
 	bool loop;
+	QMediaPlayer* audio;
 public:
+
 	AudioPlayer(QString filename, QString key, bool loop = false);
 	void play();
 	void stop();
+	void pause();
 	void restart();
-	void setVolume(qreal volume);
+	void setVolume(int volume);
 
 public slots:
-	void handleStateChanged(QAudio::State);
+	void handleStateChanged(QMediaPlayer::MediaStatus);
 };
 class AudioManager
 {
@@ -35,7 +36,7 @@ class AudioManager
 public:
 	AudioManager();
 	static void initAudioLibrary();
-	AudioPlayer* player(QString name);
+	static AudioPlayer* player(QString name);
 };
 
 #endif // AUDIO_H

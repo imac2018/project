@@ -8,7 +8,8 @@
 #define PI_f 3.14159265359f
 #define HALFPI_f 1.5707963267f
 #define PI_d 3.1415926535897932384626433832795
-#define isZero(x) (abs(x) < 0.000001f)
+#define toDegCoef 57.295779513f
+#define isZero(x) (abs(x) < 0.0001f)
 
 inline float toRadian(float degrees){ return degrees * 0.01745329252f; }
 
@@ -24,6 +25,9 @@ inline QVector3D toQVector(const aiVector3D &v){
 	return QVector3D(v.x,v.y,v.z);
 }
 inline aiVector3D toAiVector(const QVector3D v){
+	return aiVector3D(v.x(),v.y(),v.z());
+}
+inline aiVector3D toAiVector(const QVector4D v){
 	return aiVector3D(v.x(),v.y(),v.z());
 }
 

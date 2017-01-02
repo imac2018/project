@@ -1,6 +1,8 @@
 #include "audio.h"
 #include "glexception.h"
 #include <QMap>
+#include <QDir>
+#include <QMessageBox>
 
 QMap<QString, AudioPlayer*> AudioManager::library;
 
@@ -14,7 +16,20 @@ void AudioManager::addNewAudio(QString filename, QString name, bool loop)
 
 void AudioManager::initAudioLibrary()
 {
-
+	QDir soundDir("assets/sounds");
+	if(!soundDir.exists()){
+		QMessageBox::warning(NULL,"Audio Import Warning","The audio ressources directory has not been found\n"
+														 "You can play but there will be no sound",QMessageBox::Ok);
+	}
+	else{
+		QStringList filters;
+		filters << "*.mp3" << "*.wav" << "*.ogg";
+		QStringList loopFiles;
+		loopFiles << "apu.mp3" << "generique.mp3";
+		foreach(QString filename, soundDir.entryList(filters)){
+			addNewAudio(soundDir.filePath(filename),filename,loopFiles.contains(filename));
+		}
+	}
 }
 
 AudioPlayer *AudioManager::player(QString name)
@@ -26,36 +41,15 @@ AudioPlayer *AudioManager::player(QString name)
 AudioPlayer::AudioPlayer(QString filename, QString key, bool loop)
 	: key(key), loop(loop)
 {
-	file.setFileName(filename);
-
-	file.open(QIODevice::ReadOnly);
-
-	QAudioFormat format;
-	// Set up the format, eg.
-	format.setSampleRate(8000);
-	format.setChannelCount(1);
-	format.setSampleSize(8);
-	format.setCodec("audio/pcm");
-	format.setByteOrder(QAudioFormat::LittleEndian);
-	format.setSampleType(QAudioFormat::UnSignedInt);
-
-	QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
-	if (!info.isFormatSupported(format)) {
-		throw GLException("Audio Player Error", "The audio device can't play the required sound");
-	}
-
-	audio = new QAudioOutput(format, this);
-	audio->setVolume(0.5);
-	connect(audio, SIGNAL(stateChanged(QAudio::State)), this,
-			SLOT(handleStateChanged(QAudio::State)));
+	audio = new QMediaPlayer(this);
+	audio->setMedia(QMediaContent(filename));
+	connect(audio, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this,
+			SLOT(handleStateChanged(QMediaPlayer::MediaStatus)));
 }
 
 void AudioPlayer::play()
 {
-	if(file.isOpen())
-		audio->start(&file);
-	else
-		restart();
+	audio->play();
 }
 
 void AudioPlayer::stop()
@@ -63,36 +57,33 @@ void AudioPlayer::stop()
 	audio->stop();
 }
 
+void AudioPlayer::pause()
+{
+	audio->pause();
+}
+
 void AudioPlayer::restart()
 {
 	audio->stop();
-	audio->reset();
-	file.close();
-	file.flush();
-	file.setFileName(file.fileName());
-	file.open(QIODevice::ReadOnly);
-	if(file.isOpen())
-		audio->start(&file);
+	audio->play();
 }
 
-void AudioPlayer::setVolume(qreal volume)
+void AudioPlayer::setVolume(int volume)
 {
 	audio->setVolume(volume);
 }
 
-void AudioPlayer::handleStateChanged(QAudio::State newState)
+void AudioPlayer::handleStateChanged(QMediaPlayer::MediaStatus newState)
 {
 	switch (newState) {
-		case QAudio::IdleState:
+		case QMediaPlayer::EndOfMedia:
 			// Finished playing (no more data)
-			audio->stop();
-			file.close();
 			if(loop){
 				restart();
 			}
 			break;
 
-		case QAudio::StoppedState:
+		case QMediaPlayer::InvalidMedia:
 			// Stopped for other reasons
 			if (audio->error() != QAudio::NoError) {
 				switch(audio->error()){
