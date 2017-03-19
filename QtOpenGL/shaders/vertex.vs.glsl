@@ -31,7 +31,7 @@ void main(void)
 	vFragPosition = vec3(objectMVMatrix * vertexPosition);
 	viewDirection =  vec3(0,0,0) - vFragPosition;
 	vFragNormal = vec3(objectNormalMatrix * vertexNormal);
-	vFragColor = color * globalLight;
+        vFragColor = color * globalLight.rgb;
 	vTexCoords = texpos;
 
 	// Calcul de la position projetée

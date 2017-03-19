@@ -20,5 +20,7 @@
         <file>models/stairs2.3DS</file>
         <file>models/stairs3.3DS</file>
         <file>models/stairs4.3DS</file>
+        <file>level/map2.ppm</file>
+        <file>level/level2.xml</file>
     </qresource>
 </RCC>

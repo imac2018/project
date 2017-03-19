@@ -1,0 +1,15 @@
+<level mappath=":/level/map2.ppm" condition="4">
+    <torch power="0.75" r="0" g="0" b="255"/>
+    <dirlight rotationx="1" x="-0.5" r="150" g="150" b="255"/>
+<enemy life="7" cycle="60" x="5" y="5">
+</enemy>
+<enemy life="5" cycle="40" x="15" y="17">
+</enemy>
+<enemy life="10" cycle="80" x="5" y="18">
+</enemy>
+<duff x="5" y="19"></duff>
+<duff x="5" y="6"></duff>
+<duff x="11" y="4"></duff>
+<duff x="21" y="2"></duff>
+<duff x="16" y="1"></duff>
+</level>

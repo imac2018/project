@@ -13,44 +13,47 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-		mainwindow.cpp \
-		glwidget.cpp \
-		glexception.cpp \
-		object3d.cpp \
-		mode.cpp \
-		map.cpp \
-		game.cpp \
-		renderer.cpp \
-		camera.cpp \
-		menu.cpp \
-		tools.cpp \
-		level.cpp \
-		gui.cpp \
-		player.cpp \
-		audio.cpp \
-		mapelement.cpp \
-		enemy.cpp \
-		item.cpp
+    src/audio.cpp \
+    src/camera.cpp \
+    src/enemy.cpp \
+    src/game.cpp \
+    src/glexception.cpp \
+    src/glwidget.cpp \
+    src/gui.cpp \
+    src/item.cpp \
+    src/level.cpp \
+    src/mainwindow.cpp \
+    src/map.cpp \
+    src/mapelement.cpp \
+    src/menu.cpp \
+    src/mode.cpp \
+    src/object3d.cpp \
+    src/player.cpp \
+    src/renderer.cpp \
+    src/tools.cpp
 
-HEADERS  += mainwindow.h \
-		glwidget.h \
-		glexception.h \
-		object3d.h \
-		tools.h \
-		mode.h \
-		map.h\
-		game.h \
-		renderer.h \
-		camera.h \
-		menu.h \
-		vertex.h \
-		level.h \
-		gui.h \
-		player.h \
-		audio.h \
-		mapelement.h \
-		enemy.h \
-		item.h
+HEADERS  += include\mainwindow.h \
+    include/audio.h \
+    include/camera.h \
+    include/enemy.h \
+    include/game.h \
+    include/glexception.h \
+    include/glwidget.h \
+    include/gui.h \
+    include/item.h \
+    include/level.h \
+    include/mainwindow.h \
+    include/map.h \
+    include/mapelement.h \
+    include/menu.h \
+    include/mode.h \
+    include/object3d.h \
+    include/player.h \
+    include/renderer.h \
+    include/tools.h \
+    include/vertex.h
+
+INCLUDEPATH += $$PWD/include
 
 RESOURCES += \
 	ressource.qrc \

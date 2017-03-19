@@ -1,5 +1,4 @@
 #include <QApplication>
-#include <QWindow>
 #include <QMessageBox>
 
 #include "mainwindow.h"

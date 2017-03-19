@@ -1,5 +1,4 @@
 #version 330 core
-
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 color;
 layout(location = 2) in vec2 texpos;
@@ -33,7 +32,7 @@ void main(void)
 	vFragPosition = vec3(objectMVMatrix * vertexPosition);
 	viewDirection =  vec3(0,0,0) - vFragPosition;
 	vFragNormal = vec3(objectNormalMatrix * vertexNormal);
-	vFragColor = color * globalLight;
+        vFragColor = color * globalLight.rgb;
 	vTexCoords = texpos;
 
 	// Calcul de la position projetée

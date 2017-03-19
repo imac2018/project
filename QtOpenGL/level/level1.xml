@@ -1,9 +1,9 @@
-<level mappath=":/level/map1.ppm">
-<enemy life="7" cycle="60"	x="18" y="18">
+<level mappath=":/level/map1.ppm" nextlevelpath=":/level/level2.xml">
+<enemy life="7" cycle="60" x="18" y="18">
 </enemy>
-<enemy life="5" cycle="40"	x="19" y="8">
+<enemy life="5" cycle="40" x="19" y="8">
 </enemy>
-<enemy life="10" cycle="80"	x="4" y="6">
+<enemy life="10" cycle="80" x="4" y="6">
 </enemy>
 <duff x="5" y="17"></duff>
 <duff x="6" y="11"></duff>

@@ -1,6 +1,9 @@
 #version 330 core
+#ifdef GL_ES
+precision mediump float;
+#endif
 
-in vec2 vFragPos;
+in vec3 vFragPosition;
 in vec3 vFragNormal;
 in vec3 vFragColor;
 in vec2 vTexCoords;
@@ -38,4 +41,4 @@ void main() {
 				(objectAmbiantColor * ambiantLight +
 					objectDiffuseColor * cosTheta * directionalLightColor +
 						objectSpecularColor * pow(cosAlpha,5) * directionalLightColor);
-};
+}
